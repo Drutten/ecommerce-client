@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&display=swap');
+
+
+.layout header {
+    position: relative;
+    padding: 20px;
+    background-color: rgb(243, 241, 241);
+    color: rgb(48, 45, 56);
+    font-family: 'Love Ya Like A Sister', cursive;
+    text-align: center;
+}
+
+.layout header h1 {
+    font-size: 28px;  
+}
+
+.layout .row {
+    display: flex;
+}
+
+.layout .content-col {
+    width: 100%;
+}
+
+@media (min-width: 400px) {
+    .layout header h1 {
+        font-size: 32px;  
+    }
+}
+
+@media(max-width: 320px){
+    .layout header h1 {
+        font-size: 24px;
+    }
+}

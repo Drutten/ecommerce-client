@@ -1,0 +1,90 @@
+.hamburger {
+    position: absolute;
+    top: 40px;
+    left: 20px;
+    cursor: pointer;
+    display: inline-block;
+}    
+.hamburger > div{
+    width: 27px;
+    height: 4px;
+    background-color: rgb(54, 54, 54);
+    margin: 4px 0;
+    transition: 0.4s;  
+}
+  
+.hamburger.open > div:nth-child(1){
+    -webkit-transform: rotate(-45deg) translate(-5px, 6px);
+    transform: rotate(-45deg) translate(-5px, 6px);    
+}
+.hamburger.open > div:nth-child(2){
+    transform: translateX(100%);
+    opacity: 0;   
+}
+.hamburger.open > div:nth-child(3){
+    -webkit-transform: rotate(45deg) translate(-6px, -6px);
+    transform: rotate(45deg) translate(-6px, -6px);
+}
+    
+    
+.hamburger.notOpen > div:nth-child(1){
+    transform: rotate(0);  
+}
+.hamburger.notOpen > div:nth-child(2){
+    transform: translateX(0);
+    opacity: 1;
+}
+.hamburger.notOpen > div:nth-child(3){
+    transform: rotate(0);   
+}
+
+
+@media (min-width: 400px) {
+    .hamburger {
+        left: 40px;
+    }
+
+    .hamburger > div{
+        width: 35px;
+        height: 5px;
+        margin: 6px 0;
+    }
+
+    .hamburger.open > div:nth-child(1){
+        -webkit-transform: rotate(-45deg) translate(-7px, 8px);
+        transform: rotate(-45deg) translate(-7px, 8px);    
+    }
+    
+    .hamburger.open > div:nth-child(3){
+        -webkit-transform: rotate(45deg) translate(-8px, -8px);
+        transform: rotate(45deg) translate(-8px, -8px);
+    }
+}
+     
+@media(min-width: 1000px){
+    .hamburger {
+        display: none;
+    }
+}
+
+@media(max-width: 320px){
+    .hamburger {
+        top: 38px;
+    }
+    .hamburger > div{
+        width: 23px;
+        height: 4px;
+        margin: 3px 0;
+    }
+
+    .hamburger.open > div:nth-child(1){
+        -webkit-transform: rotate(-45deg) translate(-4px, 5px);
+        transform: rotate(-45deg) translate(-4px, 5px);   
+    }
+
+    .hamburger.open > div:nth-child(3){
+        -webkit-transform: rotate(45deg) translate(-5px, -5px);
+        transform: rotate(45deg) translate(-5px, -5px);
+    }
+}
+  

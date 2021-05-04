@@ -1,0 +1,9 @@
+.dashboard-card {
+    margin: 20px 38px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 2px rgb(54, 54, 54);
+}
+
+.dashboard-card header {
+    background-color: rgb(209, 208, 208);
+}

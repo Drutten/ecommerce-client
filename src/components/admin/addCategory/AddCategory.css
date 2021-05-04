@@ -1,0 +1,88 @@
+.category-form {
+    width: auto;
+    margin: 40px 20px;
+    max-width: 600px;
+}
+
+.category-form .form-item {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.category-form .form-item input {
+    width: 100%;
+    height: 36px;
+    margin-top: 8px;
+    border: 1px solid rgb(128, 128, 128);
+}
+
+.category-form .form-item input:focus {
+    outline-color: rgb(128, 128, 128);
+}
+
+.category-form .submit-btn, .category-form .cancel-btn {
+    padding: 10px 14px;
+    margin-top: 28px;
+    border-radius: 5px;
+    border: 1px solid rgb(54, 54, 54);
+    font-size: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;    
+}
+
+.category-form .submit-btn {
+    background-color: rgb(2, 117, 216);
+    color: rgb(255, 255, 255);
+    margin-left: 20px;
+}
+
+.category-form .submit-btn:hover {
+    background-color: rgb(20, 142, 248);    
+}
+
+.category-form .cancel-btn {
+    display: inline-block;
+    text-decoration: none;
+    background-color: rgb(252, 250, 250);
+    color: rgb(54, 54, 54);
+}
+
+.category-form .cancel-btn:hover {
+    background-color: rgb(233, 232, 232);    
+}
+
+.row {
+    display: flex;
+}
+
+.not-displayed {
+    display: none;
+}
+
+.error {
+    background-color: rgb(223, 152, 150);
+    padding: 6px 10px;
+    border-radius: 4px;
+}
+
+.success {
+    background-color: rgb(160, 202, 160);
+    padding: 6px 10px;
+    border-radius: 4px;  
+}
+
+@media (min-width: 500px) {
+    .category-form {
+        margin: 40px auto;
+        width: 90%;
+    }
+}
+
+@media (min-width: 1000px) {
+    .category-form {
+        margin: 40px auto;
+        width: 90%;
+        max-width: 900px;
+    }   
+}

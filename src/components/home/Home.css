@@ -1,0 +1,94 @@
+.product-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    background-color: rgb(106, 105, 107);
+}
+
+.controls h4 {
+    margin: 4px 8px 0 8px;
+    color: rgb(255, 255, 255);
+}
+
+.controls .control-buttons {
+    display: flex;
+    flex-flow: row nowrap;   
+}
+
+.controls .control-buttons button {
+    width: 100%;
+    margin: 4px;
+}
+
+.controls button {
+    display: inline-block;
+    border-radius: 5px;
+    background-color: rgb(54, 54, 54);
+    color: rgb(255, 255, 255);
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.controls form {
+    display: flex;
+    align-items: center;
+    flex-flow: row nowrap;
+}
+
+.controls form input {
+    width: 90%;
+    height: 34px;
+    margin: 4px 0 4px 4px;
+}
+
+.controls form button {
+    margin-right: 4px 4px 4px 0;
+    height: 34px;
+}
+
+.not-displayed {
+    display: none;
+}
+
+.error {
+    background-color: rgb(223, 152, 150);
+    padding: 6px 10px;
+    border-radius: 4px;
+}
+
+@media (min-width: 540px) {
+    .controls {
+        flex-flow: row nowrap;
+        justify-content: space-between;      
+    }
+
+    .controls .control-buttons button {
+        width: auto;
+        margin: 0 4px;
+    }
+
+    .controls form input {
+        width: auto;
+        margin: 0 0 0 4px;
+    }
+
+    .controls form button {
+        margin: 0;  
+    }
+}
+
+@media (min-width: 600px) {
+    .controls form button {
+        margin: 0 20px 0 0;  
+    }
+
+    .controls h4 {
+        margin-left: 20px;
+    }    
+}

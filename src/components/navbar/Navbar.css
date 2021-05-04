@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&display=swap');
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(54, 54, 54);
+    padding: 8px;
+}
+.nav {
+    display: flex;
+    list-style-type: none;
+}
+.nav-item {
+    margin-right: 20px;
+}
+.nav-link {
+    font-family: 'Love Ya Like A Sister', cursive;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+}
+.navbar .active {
+    color: rgb(214, 16, 236);
+}
+.user-icons {
+    display: flex;
+}
+.user {
+    color: rgb(255, 255, 255);
+    margin-right: 20px;
+    cursor: pointer;
+}
+.bag {
+    position: relative;
+    color: rgb(255, 255, 255);
+    margin-right: 40px;
+    cursor: pointer;
+}
+.badge {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(11, 132, 245);
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+    border-radius: 50%;
+    padding: 10px;
+    top: -10px;
+    left: 10px;
+}
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 60px;
+    background-color: rgb(243, 241, 241);
+    box-shadow: 2px 2px 2px rgb(61, 61, 61);
+    z-index: 2;
+}
+.dropdown-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.dropdown-item {
+    cursor: pointer;
+}
+
+.dropdown-link {
+    display: inline-block;
+    text-decoration: none;
+    padding: 10px 20px;
+    
+}
+.dropdown-link:hover {
+    background-color: rgb(255, 255, 255);
+}
+.open {
+    display: block;
+}
+
+/* @media (prefers-reduced-motion: no-preference) {
+    .lilla-butiken-logo {
+      animation: Lilla-butiken-logo-animate infinite 5s linear;
+    }
+  } */
+
+/* @keyframes Lilla-butiken-logo-animate {
+    0% {
+      transform: rotate(0deg);
+    }
+    33% {
+      transform: rotate(20deg);
+    }
+    70% {
+        transform: rotate(-20deg);
+    }
+    100% {
+    transform: rotate(0deg);
+    }
+  } */
+  
