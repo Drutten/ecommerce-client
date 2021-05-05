@@ -11,9 +11,10 @@
     background-color: rgb(106, 105, 107);
 }
 
-.controls h4 {
+.controls h2 {
     margin: 4px 8px 0 8px;
     color: rgb(255, 255, 255);
+    font-size: 18px;
 }
 
 .controls .control-buttons {
@@ -88,7 +89,7 @@
         margin: 0 20px 0 0;  
     }
 
-    .controls h4 {
+    .controls h2 {
         margin-left: 20px;
     }    
 }

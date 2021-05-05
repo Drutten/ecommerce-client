@@ -25,7 +25,7 @@ const ProductCard = ({product}) => {
 
                     <div className="info">
                         <div className="product-card-title">
-                            <h4>{product.name}</h4>
+                            <h3>{product.name}</h3>
                             <span>{product.category.name}</span>
                         </div>
 

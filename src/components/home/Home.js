@@ -82,7 +82,7 @@ const Home = () => {
         
         <Layout title="Lilla Butiken" categories={categories}>
             <div className="controls">
-                <h4>Sortering</h4>
+                <h2>Sortering</h2>
                 <div className="control-buttons">
                     <button onClick={fetchProductsByLatest}>Nyheter</button>
                     <button onClick={fetchProductsByPopularity}>Bästsäljare</button>

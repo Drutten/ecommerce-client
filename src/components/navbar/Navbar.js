@@ -51,7 +51,7 @@ const Navbar = (props) => {
       }, []);
 
     return (
-        <div className="navbar">
+        <nav className="navbar">
             <ul className="nav">
                 <li className="nav-item lilla-butiken-logo">
                     <Link className="nav-link" to="/">Lilla Butiken</Link>   
@@ -84,7 +84,7 @@ const Navbar = (props) => {
                 </div>
                 <div className="bag">{bag} <span className="badge">0</span></div>  
             </div>
-        </div>
+        </nav>
     )
 }
 
