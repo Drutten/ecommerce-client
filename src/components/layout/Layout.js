@@ -7,7 +7,9 @@ import Hamburger from '../hamburger/Hamburger';
 const Layout = ({
     title = 'Rubrik',
     menuItems = [],
-    categories = [],  
+    categories = [],
+    onFetchByCategory,
+    onFetchAll,  
     children
 }) => {
 
@@ -24,7 +26,13 @@ const Layout = ({
                 <h1>{title}</h1>
             </header>
             <div className="row">
-                <Menu isOpenMenu={isOpenMenu} categories={categories} menuItems={menuItems}></Menu>
+                <Menu 
+                    isOpenMenu={isOpenMenu} 
+                    categories={categories} 
+                    menuItems={menuItems} 
+                    onFetchByCategory={onFetchByCategory}
+                    onFetchAll={onFetchAll}>
+                </Menu>
                 <div className="content-col">{children}</div>
             </div>
         </div>

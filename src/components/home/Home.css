@@ -57,10 +57,62 @@
     display: none;
 }
 
+.message {
+    background-color: rgb(192, 228, 163);
+    padding: 6px 10px;
+    border-radius: 4px;
+}
+
 .error {
     background-color: rgb(223, 152, 150);
     padding: 6px 10px;
     border-radius: 4px;
+}
+
+.empty-space {
+    display: none;
+    height: 160px;
+    width: 100%;
+    margin: 8px;
+}
+
+@media (min-width: 850px) {
+    .empty-space {
+        display: block;
+        width: 400px;
+    }
+}
+
+@media (min-width: 1000px) {
+    .empty-space {
+        display: none;
+    }
+}
+
+@media (min-width: 1255px) {
+    .empty-space {
+        display: block;
+        width: 420px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .empty-space {
+        display: none;
+    }
+}
+
+@media (min-width: 1300px) {
+    .empty-space {
+        display: block;
+        width: 460px;
+    }
+}
+
+@media (min-width: 1468px) {
+    .empty-space {
+        width: 540px;
+    }
 }
 
 @media (min-width: 540px) {

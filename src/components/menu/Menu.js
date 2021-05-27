@@ -4,7 +4,7 @@ import './Menu.css';
 
 const Menu = (props) => {
 
-  const {history, isOpenMenu, menuItems = [], categories = []} = props;
+  const {history, isOpenMenu, menuItems = [], categories = [], onFetchByCategory, onFetchAll} = props;
 
   const icon = 'icon';
 
@@ -28,13 +28,13 @@ const Menu = (props) => {
   
   return(
     <ul className={`menu ${setOpenClass()}`}>
-      <li className={`${getActiveClass(history, '/')}`}><Link className="menu-link" to="/"><span>{icon}</span>Start</Link></li>
+      <li className={`${getActiveClass(history, '/')}`}><Link className="menu-item" to="/"><span>{icon}</span>Start</Link></li>
       {authService.getLoggedInUser() && authService.getLoggedInUser().user.role === 0 && (
-        <li className={`${getActiveClass(history, '/dashboard')}`}><Link className="menu-link" to="/dashboard"><span>{icon}</span>Kontrollpanel</Link></li>
+        <li className={`${getActiveClass(history, '/dashboard')}`}><Link className="menu-item" to="/dashboard"><span>{icon}</span>Kontrollpanel</Link></li>
       )}
 
       {authService.getLoggedInUser() && authService.getLoggedInUser().user.role === 1 && (
-        <li className={`${getActiveClass(history, '/admin/dashboard')}`}><Link className="menu-link" to="/admin/dashboard"><span>{icon}</span>Administratör</Link></li> 
+        <li className={`${getActiveClass(history, '/admin/dashboard')}`}><Link className="menu-item" to="/admin/dashboard"><span>{icon}</span>Administratör</Link></li> 
       )}
       
 
@@ -43,17 +43,24 @@ const Menu = (props) => {
           <li
             key={item.id} 
             className={`${getActiveClass(history, `${item.path}`)}`}>
-            <Link className="menu-link" to={item.path}><span>{icon}</span>{addCapitalLetter(item.name)}</Link>
+            <Link className="menu-item" to={item.path}><span>{icon}</span>{addCapitalLetter(item.name)}</Link>
           </li>  
         )
       })}
+
+      {(categories.length) && 
+      <li className="category-item" onClick={onFetchAll}>
+        <div className="menu-item"><span>icon</span>Alla produkter</div>
+      </li>
+      }
 
       {(categories) && categories.map(item => {
         return (
           <li
             key={item._id} 
-            className={`${getActiveClass(history, '/')}`}>
-            <Link className="menu-link" to='/'><span>icon</span>{addCapitalLetter(item.name)}</Link>
+            className="category-item"
+            onClick={() => onFetchByCategory(item._id)}>
+            <div className="menu-item"><span>icon</span>{addCapitalLetter(item.name)}</div>
           </li> 
         )
       })}

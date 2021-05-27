@@ -13,7 +13,11 @@ const Home = () => {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [error, setError] = useState('');
+    const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
+    const [sort, setSort] = useState('createdAt');
+    const [currentCategory, setCurrentCategory] = useState('');
+    const [searchText, setSearchText] = useState('');
 
     const productService = new ProductService();
     const categoryService = new CategoryService();
@@ -21,34 +25,95 @@ const Home = () => {
     const search =<FontAwesomeIcon icon={faSearch}/>
 
     
-    const fetchProductsByPopularity = async () => {
-        setLoading(true);
-        const result = await productService.getProducts('popularity');
+    const fetchProductsBySort = async (sortValue = sort) => {
+        let result;
+        prepareFetch();
+        if (currentCategory) {
+            result = await productService.getProductsByCategory(sortValue, currentCategory);    
+        }
+        else{
+            result = await productService.getProducts(sortValue);
+        }
         if (result.error) {
-            setError(result.error);
-            setLoading(false);
+            endFetchWithError(result.error);
         }
         else {
-            setProducts(result);
-            setLoading(false);    
+            endFetchWithSuccess(result);
+            setSort(sortValue);   
+        }  
+    }
+
+
+    const fetchProductsByCategory = async (categoryId) => {
+        prepareFetch();
+        const result = await productService.getProductsByCategory(sort, categoryId);
+        if (result.error) {
+            endFetchWithError(result.error);
+        }
+        else {
+            endFetchWithSuccess(result);
+            setCurrentCategory(categoryId);
         }
     }
 
-    const fetchProductsByLatest = async () => {
-        setLoading(true);
-        const result = await productService.getProducts('createdAt');
+
+    const fetchProductsBySearch = async () => {
+        const queryParams = {};
+        if (searchText) queryParams.search = searchText;
+        if (sort) {
+            queryParams.sort = sort;
+            queryParams.order = 'desc';
+        }
+        prepareFetch();
+        const result = await productService.getProductsBySearch(queryParams);
         if (result.error) {
-            setError(result.error);
+            endFetchWithError(result.error);
         }
         else {
-            setProducts(result);
-            setLoading(false);
+            endFetchWithSuccess(result);
+            setCurrentCategory('');
         }
+    }
+
+
+    const fetchAll = async () => {
+        prepareFetch();
+        const result = await productService.getProducts(sort);
+    
+        if (result.error) {
+            endFetchWithError(result.error);
+        }
+        else {
+            endFetchWithSuccess(result);
+            setCurrentCategory(''); 
+        }
+    }
+
+
+    const prepareFetch = () => {
+        setError('');
+        setMessage('');
+        setLoading(true);
+    }
+
+
+    const endFetchWithError = (err) => {
+        setError(err);
+        setLoading(false);
+    }
+
+
+    const endFetchWithSuccess = (result) => {
+        if (result.length === 0) {
+            setMessage('Inga produkter matchade din sökning');
+        }
+        setProducts(result);
+        setLoading(false);
     }
 
 
     useEffect(() => {
-        fetchProductsByLatest();
+        fetchProductsBySort('createdAt');
     }, []);
 
 
@@ -66,11 +131,31 @@ const Home = () => {
     }, []);
 
 
+    const handleChangeSearch = (event) => {
+        setSearchText(event.target.value);
+    }
+
+
+    const handleSubmitSearch = (event) => {
+        event.preventDefault();
+        fetchProductsBySearch(categories[0]);
+        setSearchText('');
+    }
+
+
     const displayError = () => (
         <div className={ (error) ? 'error' : 'not-displayed' }>
             { error }
         </div>
     )
+
+
+    const displayMessage = () => (
+        <div className={ (message) ? 'message' : 'not-displayed' }>
+            { message }
+        </div>
+    )
+
 
     const displayLoading = () => (
         <div className={ (loading) ? 'spinner' : 'not-displayed' }>
@@ -78,29 +163,37 @@ const Home = () => {
         </div>
     );
     
+
     return (
         
-        <Layout title="Lilla Butiken" categories={categories}>
+        <Layout 
+            title="Lilla Butiken" 
+            categories={categories} 
+            onFetchByCategory={fetchProductsByCategory} 
+            onFetchAll={fetchAll}
+        >
             <div className="controls">
                 <h2>Sortering</h2>
                 <div className="control-buttons">
-                    <button onClick={fetchProductsByLatest}>Nyheter</button>
-                    <button onClick={fetchProductsByPopularity}>Bästsäljare</button>
+                    <button onClick={() => fetchProductsBySort('createdAt')}>Nyheter</button>
+                    <button onClick={() => fetchProductsBySort('popularity')}>Bästsäljare</button>
                 </div>
                 
-                <form>
-                    <input type="text" placeholder="Sök"></input>
-                    <button>{search}</button>
+                <form onSubmit={(e) => handleSubmitSearch(e)}>
+                    <input type="text" placeholder="Sök" value={searchText} onChange={(e) => handleChangeSearch(e)}></input>
+                    <button type="submit">{search}</button>
                 </form>
             </div>
 
             {displayLoading()}
             {displayError()}
+            {displayMessage()}
             
             <div className="product-wrapper">
                 {products && products.map(p => 
                     <ProductCard key={p._id} product={p}></ProductCard>
                 )}
+                {(products.length % 2 === 1) && <div className="empty-space"></div>}
             </div>
         </Layout>
     )
