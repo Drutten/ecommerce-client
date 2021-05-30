@@ -11,6 +11,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import AdminDashboard from './components/admin/adminDashboard/AdminDashboard';
 import AddCategory from './components/admin/addCategory/AddCategory';
 import AddProduct from './components/admin/addProduct/AddProduct';
+import Product from './components/product/Product';
 import Page from './components/Page';
 
 import './App.css';
@@ -38,6 +39,12 @@ const App = () => {
           <Route exact path='/signin' render={(props) => (
             <Page title="Logga in">
               <Signin {...props} />
+            </Page>
+          )}/>
+
+          <Route exact path='/products/:productId' render={(props) => (
+            <Page title="Start">
+              <Product {...props} />
             </Page>
           )}/>
 

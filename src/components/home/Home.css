@@ -1,4 +1,5 @@
 .product-wrapper {
+    margin-top: 20px;
     display: flex;
     justify-content: center;
     flex-flow: row wrap;
@@ -7,7 +8,7 @@
 .controls {
     display: flex;
     flex-direction: column;
-    padding: 8px;
+    padding: 0.65em;
     background-color: rgb(106, 105, 107);
 }
 
@@ -71,48 +72,8 @@
 
 .empty-space {
     display: none;
-    height: 160px;
-    width: 100%;
-    margin: 8px;
-}
-
-@media (min-width: 850px) {
-    .empty-space {
-        display: block;
-        width: 400px;
-    }
-}
-
-@media (min-width: 1000px) {
-    .empty-space {
-        display: none;
-    }
-}
-
-@media (min-width: 1255px) {
-    .empty-space {
-        display: block;
-        width: 420px;
-    }
-}
-
-@media (min-width: 1280px) {
-    .empty-space {
-        display: none;
-    }
-}
-
-@media (min-width: 1300px) {
-    .empty-space {
-        display: block;
-        width: 460px;
-    }
-}
-
-@media (min-width: 1468px) {
-    .empty-space {
-        width: 540px;
-    }
+    width: 300px;
+    margin: 20px 8px;
 }
 
 @media (min-width: 540px) {
@@ -144,4 +105,47 @@
     .controls h2 {
         margin-left: 20px;
     }    
+}
+
+@media (min-width: 500px) {
+    .empty-space {
+        display: block;
+        width: 220px;
+    }
+}
+
+@media (min-width: 570px) {
+    .empty-space {
+        width: 260px;
+    }    
+}
+
+@media (min-width: 965px) {
+    .empty-space {
+        width: 300px;
+    }
+}
+
+@media (min-width: 1100px) {
+    .empty-space {
+        width: 260px;
+    }
+}
+
+@media (min-width: 1250px) {
+    .empty-space {
+        width: 300px;
+    }
+}
+
+@media (min-width: 1468px) {
+    .empty-space {
+        width: 260px;
+    }
+}
+
+@media (max-width: 380px) {
+    .empty-space {
+        width: 260px;
+    }
 }

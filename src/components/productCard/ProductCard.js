@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 // import { faNotEqual } from '@fortawesome/free-solid-svg-icons';
@@ -15,11 +16,12 @@ const ProductCard = ({product}) => {
 
     
     return (
+        
         <div className="product-card">
             <div className="product-content">
-                <div className="image">
+                <Link to={`/products/${product._id}`} className="image">
                     <ProductImage product={product} url="products"/>   
-                </div>
+                </Link>
 
                 <div className="product-card-body">
 
@@ -32,8 +34,8 @@ const ProductCard = ({product}) => {
                         <div className="product-card-info">
                             <span><b>{product.price}</b> SEK</span>
                             <span>{product.quantity} i lager</span>
-                            <div className="buttons">
-                                <button title="Lägg i varukorgen"><span>{cartPlus}</span></button>
+                            <div className="card-button">
+                                <button className="card-btn" title="Lägg i varukorgen"><span>{cartPlus}</span><span className="button-text">Lägg till</span></button>
                                 {/* <button title="Ta bort från varukorgen"><span>{notEqual}</span></button> */}
                             </div>
 
@@ -42,13 +44,14 @@ const ProductCard = ({product}) => {
                 </div>
             </div>
 
-            <div className="extra">
-                {(product.quantity < 10) ? (<span className="warning">Få kvar</span>) 
-                : (<span></span>)}
-                <span>{regularHeart}</span>
-                {/* <span>{solidHeart}</span> */}
-            </div>   
+            
+            {(product.quantity < 10) ? (<span className="warning">Få kvar</span>) 
+            : (<span></span>)}
+            <span className="heart">{regularHeart}</span>
+            {/* <span>{solidHeart}</span> */}
+             
         </div>
+
     )
 }
 

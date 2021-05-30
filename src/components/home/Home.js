@@ -152,7 +152,7 @@ const Home = () => {
 
     const displayMessage = () => (
         <div className={ (message) ? 'message' : 'not-displayed' }>
-            { message }
+            {message}
         </div>
     )
 
@@ -193,8 +193,12 @@ const Home = () => {
                 {products && products.map(p => 
                     <ProductCard key={p._id} product={p}></ProductCard>
                 )}
-                {(products.length % 2 === 1) && <div className="empty-space"></div>}
+                <div className="empty-space"></div>
+                <div className="empty-space"></div>
+                <div className="empty-space"></div>
+                <div className="empty-space"></div>
             </div>
+            
         </Layout>
     )
 }

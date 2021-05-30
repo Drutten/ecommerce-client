@@ -1,6 +1,13 @@
 import queryString from 'query-string';
 
 export default class ProductService {
+
+    getProduct = async (id) => {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/products/${id}`, {
+            method: "GET"
+        });
+        return await response.json();   
+    }
     
 
     getProducts = async (sort) => {

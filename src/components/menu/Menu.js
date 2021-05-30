@@ -1,4 +1,7 @@
+import { Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTools, faHome, faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 import AuthService from '../../services/authService';
 import './Menu.css';
 
@@ -7,6 +10,11 @@ const Menu = (props) => {
   const {history, isOpenMenu, menuItems = [], categories = [], onFetchByCategory, onFetchAll} = props;
 
   const icon = 'icon';
+
+  const home =<FontAwesomeIcon icon={faHome}/>
+  const tools =<FontAwesomeIcon icon={faTools}/>
+  const bag =<FontAwesomeIcon icon={faShoppingBag}/>
+  
 
   const authService = new AuthService();
 
@@ -28,39 +36,46 @@ const Menu = (props) => {
   
   return(
     <ul className={`menu ${setOpenClass()}`}>
-      <li className={`${getActiveClass(history, '/')}`}><Link className="menu-item" to="/"><span>{icon}</span>Start</Link></li>
+      <li className={`${getActiveClass(history, '/')}`}><Link className="menu-item" to="/"><span>{home}</span>Start</Link></li>
+      <li className={`${getActiveClass(history, '/')}`}><Link className="menu-item" to="/"><span>{bag}</span>Varukorg</Link></li>
       {authService.getLoggedInUser() && authService.getLoggedInUser().user.role === 0 && (
         <li className={`${getActiveClass(history, '/dashboard')}`}><Link className="menu-item" to="/dashboard"><span>{icon}</span>Kontrollpanel</Link></li>
       )}
 
       {authService.getLoggedInUser() && authService.getLoggedInUser().user.role === 1 && (
-        <li className={`${getActiveClass(history, '/admin/dashboard')}`}><Link className="menu-item" to="/admin/dashboard"><span>{icon}</span>Administratör</Link></li> 
+        <li className={`${getActiveClass(history, '/admin/dashboard')}`}><Link className="menu-item" to="/admin/dashboard"><span>{tools}</span>Administratör</Link></li> 
       )}
       
 
-      {(menuItems) && menuItems.map(item => {
+      {(menuItems.length > 0) && menuItems.map(item => {
         return (
           <li
             key={item.id} 
             className={`${getActiveClass(history, `${item.path}`)}`}>
-            <Link className="menu-item" to={item.path}><span>{icon}</span>{addCapitalLetter(item.name)}</Link>
+            <Link className="menu-item" to={item.path}><span></span>{addCapitalLetter(item.name)}</Link>
           </li>  
         )
       })}
 
-      {(categories.length) && 
-      <li className="category-item" onClick={onFetchAll}>
-        <div className="menu-item"><span>icon</span>Alla produkter</div>
-      </li>
+      {(categories.length > 0) && (
+        <Fragment>
+        <li className="category-space">
+          <div className="menu-item"></div>
+        </li>
+        <li className="category-item" onClick={onFetchAll}>
+          <div className="menu-item"><span></span>Alla produkter</div>
+        </li>
+      </Fragment>
+      )
       }
 
-      {(categories) && categories.map(item => {
+      {(categories.length > 0) && categories.map(item => {
         return (
           <li
             key={item._id} 
             className="category-item"
             onClick={() => onFetchByCategory(item._id)}>
-            <div className="menu-item"><span>icon</span>{addCapitalLetter(item.name)}</div>
+            <div className="menu-item"><span></span>{addCapitalLetter(item.name)}</div>
           </li> 
         )
       })}
