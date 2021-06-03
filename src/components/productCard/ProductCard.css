@@ -1,8 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Marck+Script&family=Tajawal:wght@300&display=swap');
+
 .product-card {
     position: relative;
     width: 300px;
     margin: 20px 8px;
     border: 1px solid rgb(209, 208, 208);
+    color: rgb(79, 81, 80);
+    font-family: 'Tajawal', sans-serif;
 }
 
 .product-card .product-content {
@@ -55,7 +59,7 @@
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-    background-color: rgb(54, 54, 54);
+    background-color: rgb(79, 81, 80);
     border: none;
     padding: 6px 10px;
     cursor: pointer;

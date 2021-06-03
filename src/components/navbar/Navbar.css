@@ -7,9 +7,11 @@
     background-color: rgb(54, 54, 54);
     padding: 8px;
 }
-.nav {
+ul.nav {
     display: flex;
     list-style-type: none;
+    padding: 0;
+    margin-left: 20px;
 }
 .nav-item {
     margin-right: 20px;
@@ -19,13 +21,11 @@
     color: rgb(255, 255, 255);
     text-decoration: none;
 }
-.navbar .active {
-    color: rgb(214, 16, 236);
-}
 .user-icons {
     display: flex;
+    margin-right: 40px;
 }
-.user {
+.user, .heart {
     color: rgb(255, 255, 255);
     margin-right: 20px;
     cursor: pointer;
@@ -33,7 +33,6 @@
 .bag {
     position: relative;
     color: rgb(255, 255, 255);
-    margin-right: 40px;
     cursor: pointer;
 }
 .badge {
@@ -72,7 +71,6 @@
     display: inline-block;
     text-decoration: none;
     padding: 10px 20px;
-    
 }
 .dropdown-link:hover {
     background-color: rgb(255, 255, 255);
@@ -81,24 +79,12 @@
     display: block;
 }
 
-/* @media (prefers-reduced-motion: no-preference) {
-    .lilla-butiken-logo {
-      animation: Lilla-butiken-logo-animate infinite 5s linear;
+@media (max-width: 500px) {
+    .navbar {
+        padding: 4px;
     }
-  } */
 
-/* @keyframes Lilla-butiken-logo-animate {
-    0% {
-      transform: rotate(0deg);
+    .nav {
+        margin-left: 0;
     }
-    33% {
-      transform: rotate(20deg);
-    }
-    70% {
-        transform: rotate(-20deg);
-    }
-    100% {
-    transform: rotate(0deg);
-    }
-  } */
-  
+}

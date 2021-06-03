@@ -1,6 +1,6 @@
 .hamburger {
     position: absolute;
-    top: 40px;
+    top: 22px;
     left: 20px;
     cursor: pointer;
     display: inline-block;
@@ -41,6 +41,7 @@
 
 @media (min-width: 400px) {
     .hamburger {
+        top: 20px;
         left: 40px;
     }
 
@@ -66,25 +67,3 @@
         display: none;
     }
 }
-
-@media(max-width: 320px){
-    .hamburger {
-        top: 38px;
-    }
-    .hamburger > div{
-        width: 23px;
-        height: 4px;
-        margin: 3px 0;
-    }
-
-    .hamburger.open > div:nth-child(1){
-        -webkit-transform: rotate(-45deg) translate(-4px, 5px);
-        transform: rotate(-45deg) translate(-4px, 5px);   
-    }
-
-    .hamburger.open > div:nth-child(3){
-        -webkit-transform: rotate(45deg) translate(-5px, -5px);
-        transform: rotate(45deg) translate(-5px, -5px);
-    }
-}
-  

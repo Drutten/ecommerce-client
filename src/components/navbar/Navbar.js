@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef, Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faHeart, faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 
 import './Navbar.css';
 import AuthService from '../../services/authService';
@@ -10,6 +9,7 @@ import AuthService from '../../services/authService';
 
 const user = <FontAwesomeIcon icon={faUser}/>;
 const bag = <FontAwesomeIcon icon={faShoppingBag}/>;
+const heart = <FontAwesomeIcon icon={faHeart}/>;
 
 
 const Navbar = (props) => {
@@ -58,6 +58,7 @@ const Navbar = (props) => {
                 </li>  
             </ul>
             <div className="user-icons">
+            <div className="heart">{heart}</div>
                 <div className="dropdown" ref={node}>
                     <div className="user" onClick={toggleDropdown}>{user}</div>
                     <div className={`dropdown-menu ${isOpen ? 'open' : ''}`}>

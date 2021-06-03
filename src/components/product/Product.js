@@ -1,32 +1,78 @@
 import { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartPlus, faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
+// import { faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 
 import ProductService from '../../services/productService';
 import Layout from '../layout/Layout';
+import ProductImage from '../productImage/ProductImage';
 import './Product.css';
 
 const Product = (props) => {
-    const [product, setProduct] = useState({});
+    const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [isFullDescription, setIsFullDescription] = useState(false);
     // const [message, setMessage] = useState('');
     const productId = props.match.params.productId;
+
+    const cartPlus =<FontAwesomeIcon icon={faCartPlus}/>
+    // const notEqual =<FontAwesomeIcon icon={faNotEqual}/>
+    const solidHeart =<FontAwesomeIcon icon={fasHeart}/>
+    const regularHeart =<FontAwesomeIcon icon={farHeart}/>
     
 
     useEffect(() => {
         const fetchProduct = async () => {
             const productService = new ProductService();
-            
             setLoading(true);
             const result = await productService.getProduct(productId);
             if (result.error) {
                 setError(result.error);
+                setLoading(false);
             }
             else {
                 setProduct(result);
+                setLoading(false);
             }
-        }    
+        }
+        fetchProduct();    
     }, [productId]);
+
+    const getQuantityClass = () => {
+        return (product.quantity < 10) ? 'danger' : ''
+    }
+
+
+    const toggleDescription = () => {
+        setIsFullDescription(!isFullDescription);
+    }
     
+
+    const displayDescription = (text = '') => {
+        const displayedChars = 20;
+        let displayedText = text;
+        let buttonText = '';
+        if (text.length > displayedChars && !isFullDescription) {
+            displayedText = text.substring(0, displayedChars + 1);
+            buttonText = 'Läs mer';
+        }
+        if (text.length > displayedChars && isFullDescription) 
+            buttonText = 'Läs mindre';
+        
+        return (
+            <div>
+                <p>{displayedText}</p>
+                {(buttonText) 
+                    ? <button 
+                        className="descriptionButton" 
+                        onClick={toggleDescription}>{buttonText}
+                    </button>
+                    : ''}
+            </div>
+        )
+    }
 
 
     const displayError = () => (
@@ -51,12 +97,39 @@ const Product = (props) => {
 
 
     return (
-        <Layout title="Lilla Butiken">
+        <Layout title={(product) ? product.name : 'Lilla Butiken'}>
             {displayLoading()}
             {displayError()}
-            <div>
-
-            </div>    
+            {product && 
+                <div>
+                    <div className="product-container">
+                        <div className="image-container">
+                            <div className="image">
+                                <ProductImage product={product} url="products"/>
+                            </div>
+                        </div>
+                        <div className="info-container">
+                            <div className="info">
+                                <div className="info-title">
+                                    <h2>{product.name}</h2>
+                                </div>
+                                <div className="info-details">
+                                    <span className={getQuantityClass()}>{product.quantity} i lager</span>
+                                    <span><b>{product.price}</b> SEK</span>
+                                </div>
+                                <div className="info-buttons">
+                                    <button className="add-button"><span>{regularHeart}</span><span>Favorit</span></button>
+                                    <button className="fav-button"><span>{cartPlus}</span><span>Köp</span></button>
+                                </div>
+                                <div className="info-description">
+                                    <h3>Beskrivning</h3>
+                                    {displayDescription(product.description)}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }    
         </Layout>
     )
 }

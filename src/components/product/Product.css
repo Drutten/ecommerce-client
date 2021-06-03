@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Marck+Script&family=Tajawal:wght@300&display=swap');
+
+.product-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: rgb(79, 81, 80);
+    font-family: 'Tajawal', sans-serif;
+}
+
+.product-container .image-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 310px;
+    height: 280px;
+    margin: 20px;
+    border: 1px solid rgb(209, 208, 208);
+}
+
+.product-container .image-container .image {
+    width: 210px;
+    height: 180px;  
+}
+
+.product-container .info-container {
+    width: 310px;
+    margin: 20px 60px;
+}
+
+.product-container h2 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.product-container .info-details {
+    display: flex;
+    flex-direction: column;
+    margin: 48px 0 8px;
+}
+
+.product-container .info-details span:last-child {
+    font-size: 28px;
+}
+
+.product-container .info-container .info-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-container .info-container .info-buttons button {
+    width: 100%;
+    background-color: rgb(79, 81, 80);
+    color: white;
+    border: none;
+    padding: 16px 20px;
+    margin: 4px 0;
+    cursor: pointer;
+}
+
+.product-container .info-buttons button span:last-child {
+    margin-left: 4px;
+}
+
+.danger {
+    color: rgb(255, 0, 0);
+}
+
+.descriptionButton {
+    display: block;
+    background-color: transparent;
+    color: rgb(4, 4, 153);
+    border: none;
+    border-bottom: 1px solid rgb(4, 4, 153);
+    cursor: pointer;
+}
+
+@media (min-width: 700px) {
+    .product-container {
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+    
+    .product-container .image-container {
+        margin: 28px;
+    }
+
+    .product-container .image-container .image {
+        
+    }
+    
+    .product-container .info-container {
+        margin: 28px;   
+    }
+
+    .product-container .info-container .info-buttons {
+        flex-flow: row nowrap;
+    }
+
+    .product-container .info-container .info-buttons button {
+        width: 40%;
+        margin: 10px 10px 10px 0;
+    }
+}
+
+@media (min-width: 800px) {
+    .product-container .image-container {
+        width: 400px;
+        height: 370px;
+    }
+
+    .product-container .image-container .image {
+        width: 300px;
+        height: 270px;   
+    }    
+}
+
+@media (max-width: 350px) {
+    .product-container .image-container, .product-container .info-container {
+        width: 220px;
+        height: 190px;
+        border: none;
+    }
+
+    .product-container .image-container .image {
+        width: 220px;
+        height: 190px;  
+    }
+}

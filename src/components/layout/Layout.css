@@ -11,7 +11,8 @@
 }
 
 .layout header h1 {
-    font-size: 28px;  
+    margin: 0;
+    font-size: 32px;  
 }
 
 .layout .row {
@@ -22,14 +23,9 @@
     width: 100%;
 }
 
-@media (min-width: 400px) {
+@media(max-width: 500px){
     .layout header h1 {
-        font-size: 32px;  
-    }
-}
-
-@media(max-width: 320px){
-    .layout header h1 {
-        font-size: 24px;
+        font-size: 28px;
+        visibility: hidden;
     }
 }

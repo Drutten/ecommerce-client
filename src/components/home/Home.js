@@ -173,7 +173,6 @@ const Home = () => {
             onFetchAll={fetchAll}
         >
             <div className="controls">
-                <h2>Sortering</h2>
                 <div className="control-buttons">
                     <button onClick={() => fetchProductsBySort('createdAt')}>Nyheter</button>
                     <button onClick={() => fetchProductsBySort('popularity')}>Bästsäljare</button>
@@ -196,7 +195,7 @@ const Home = () => {
                 <div className="empty-space"></div>
                 <div className="empty-space"></div>
                 <div className="empty-space"></div>
-                <div className="empty-space"></div>
+                
             </div>
             
         </Layout>
