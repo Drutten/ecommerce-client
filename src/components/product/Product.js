@@ -1,15 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus, faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
 // import { faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 
+import { StateContext } from '../../StateContext';
 import ProductService from '../../services/productService';
 import Layout from '../layout/Layout';
 import ProductImage from '../productImage/ProductImage';
 import './Product.css';
 
 const Product = (props) => {
+
+    const [cartItems, updateCart] = useContext(StateContext);
+
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -40,15 +44,47 @@ const Product = (props) => {
         fetchProduct();    
     }, [productId]);
 
+
+
+    const addToCart = (item) => {
+        if (getIndex(item._id) === -1) {
+            const cartItem = {...item, amount: 1}
+            updateCart([...cartItems, cartItem]); // one level deep
+        }
+    }
+
+
+    const removeFromCart = (item) => {
+        const index = getIndex(item._id);
+        if (index !== -1) {
+            const updatedCart = [...cartItems];
+            updatedCart.splice(index, 1);
+            updateCart([updatedCart]);
+        }
+    }
+
+
+    const getIndex = (id) => {
+        let index = -1;
+        cartItems.forEach((item, i) => {
+            if (item.id === id) index = i;
+        });
+        return index;
+    }
+
+
+
     const getQuantityClass = () => {
         return (product.quantity < 10) ? 'danger' : ''
     }
+
 
 
     const toggleDescription = () => {
         setIsFullDescription(!isFullDescription);
     }
     
+
 
     const displayDescription = (text = '') => {
         const displayedChars = 20;
@@ -75,6 +111,7 @@ const Product = (props) => {
     }
 
 
+
     const displayError = () => (
         <div className={ (error) ? 'error' : 'not-displayed' }>
             { error }
@@ -89,15 +126,17 @@ const Product = (props) => {
     // )
 
 
+
     const displayLoading = () => (
         <div className={ (loading) ? 'spinner' : 'not-displayed' }>
             Laddar...
         </div>
     );
 
+    
 
     return (
-        <Layout title={(product) ? product.name : 'Lilla Butiken'}>
+        <Layout title={(product && product.name) ? product.name : 'Lilla Butiken'}>
             {displayLoading()}
             {displayError()}
             {product && 

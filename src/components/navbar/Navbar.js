@@ -1,8 +1,9 @@
-import { useState, useEffect, useRef, Fragment } from 'react';
+import { useState, useEffect, useContext, useRef, Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faHeart, faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 
+import { StateContext } from '../../StateContext';
 import './Navbar.css';
 import AuthService from '../../services/authService';
 
@@ -13,6 +14,9 @@ const heart = <FontAwesomeIcon icon={faHeart}/>;
 
 
 const Navbar = (props) => {
+
+    const [cartItems, updateCart] = useContext(StateContext);
+
     const [isOpen, setIsOpen] = useState(false);
 
     const node = useRef();
@@ -39,16 +43,26 @@ const Navbar = (props) => {
         }
         // outside click
         setIsOpen(false); 
-      };
+    };
 
-      useEffect(() => {
+    useEffect(() => {
         // add when mounted
         document.addEventListener("mousedown", handleClick);
         // return function to be called when unmounted
         return () => {
-          document.removeEventListener("mousedown", handleClick);
+            document.removeEventListener("mousedown", handleClick);
         };
-      }, []);
+    }, []);
+
+
+    const getCartItemsAmount = () => {
+        let totalAmount = 0;
+        cartItems.forEach(item => {
+            totalAmount += item.amount;
+        });
+        return totalAmount;
+    }
+
 
     return (
         <nav className="navbar">
@@ -83,7 +97,7 @@ const Navbar = (props) => {
                         </ul>
                     </div>
                 </div>
-                <div className="bag">{bag} <span className="badge">0</span></div>  
+                <Link to="/cart" className="bag">{bag} <span className="badge">{getCartItemsAmount()}</span></Link> 
             </div>
         </nav>
     )

@@ -1,14 +1,48 @@
-import React, { createContext, useState } from 'react';
-import AuthService from './services/authService';
+import React, { createContext, useEffect, useState } from 'react';
 
 export const StateContext = createContext();
 
 export const StateProvider = (props) => {
 
-  const [user, setUser] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    getCart();
+  }, [])
+
+  
+  const updateCart = (updatedCart) => {
+    if (storageIsAvailable('sessionStorage')) {
+      sessionStorage.setItem('cart', JSON.stringify(updatedCart));
+    }
+    setCartItems(updatedCart);
+  }
+
+  const getCart = () => {
+    if (storageIsAvailable('sessionStorage')) {
+      if (sessionStorage.getItem('cart')) {
+        setCartItems(JSON.parse(sessionStorage.getItem('cart')));
+      }
+    }
+  }
+
+  const storageIsAvailable = (type) => {
+    let storage;
+    try {
+        storage = window[type];
+        var x = 'test';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+
 
   return (
-    <StateContext.Provider value={[user, setUser]}>
+    <StateContext.Provider value={[cartItems, updateCart]}>
       {props.children}
     </StateContext.Provider>
   );

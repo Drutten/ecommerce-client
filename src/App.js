@@ -1,6 +1,6 @@
 import { Switch, Route } from 'react-router-dom';
 
-// import { StateProvider } from './StateContext';
+import { StateProvider } from './StateContext';
 import  PrivateRoute  from './shared/PrivateRoute';
 import  AdminRoute  from './shared/AdminRoute';
 import Home from './components/home/Home';
@@ -12,6 +12,7 @@ import AdminDashboard from './components/admin/adminDashboard/AdminDashboard';
 import AddCategory from './components/admin/addCategory/AddCategory';
 import AddProduct from './components/admin/addProduct/AddProduct';
 import Product from './components/product/Product';
+import Cart from './components/cart/Cart';
 import Page from './components/Page';
 
 import './App.css';
@@ -19,7 +20,7 @@ import './App.css';
 const App = () => {
   return (
     <div>
-      {/* <StateProvider> */}
+      <StateProvider>
         <Navbar/>
         <Switch>
           <PrivateRoute exact path='/dashboard' title='Kontrollpanel' component={Dashboard}></PrivateRoute>
@@ -42,6 +43,12 @@ const App = () => {
             </Page>
           )}/>
 
+          <Route exact path='/cart' render={(props) => (
+            <Page title="Varukorg">
+              <Cart {...props} />
+            </Page>
+          )}/>
+
           <Route exact path='/products/:productId' render={(props) => (
             <Page title="Start">
               <Product {...props} />
@@ -54,7 +61,7 @@ const App = () => {
             </Page>
           )}/>
         </Switch>
-      {/* </StateProvider> */}
+      </StateProvider>
     </div>
   );
 }
