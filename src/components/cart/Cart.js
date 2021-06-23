@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
@@ -21,6 +22,15 @@ const Cart = () => {
 
     }, []);
 
+
+    const getTotal = () => {
+        let total = 0;
+        cartItems.forEach((item) => {
+            total += (item.price * item.amount);    
+        });
+        return total;
+    }
+
     
     const displayMessage = () => (
         <div className={ (message) ? 'message' : 'not-displayed' }>
@@ -39,12 +49,24 @@ const Cart = () => {
         >
             
             {displayMessage()}
+
+            <div className="sm-title">
+                <h1>Varukorg</h1>
+            </div>
             
             <div className="cart-wrapper">
                 {cartItems && cartItems.map(cartItem => 
                     <ItemCard key={cartItem._id} item={cartItem}></ItemCard>
                 )}
+
+                <div className="total">
+                    <span>Totalt att betala: <b>{getTotal()}</b> SEK</span>
+                    <Link to="/" className="link-button">Till kassan</Link>
+                    <Link to="/" className="link-button">Fortsätt handla</Link>
+                </div>
             </div>
+
+            
             
         </Layout>
     )

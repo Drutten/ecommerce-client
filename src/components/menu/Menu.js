@@ -37,7 +37,7 @@ const Menu = (props) => {
   return(
     <ul className={`menu ${setOpenClass()}`}>
       <li className={`${getActiveClass(history, '/')}`}><Link className="menu-item" to="/"><span>{home}</span>Start</Link></li>
-      <li className={`${getActiveClass(history, '/')}`}><Link className="menu-item" to="/"><span>{bag}</span>Varukorg</Link></li>
+      <li className={`${getActiveClass(history, '/cart')}`}><Link className="menu-item" to="/cart"><span>{bag}</span>Varukorg</Link></li>
       {authService.getLoggedInUser() && authService.getLoggedInUser().user.role === 0 && (
         <li className={`${getActiveClass(history, '/dashboard')}`}><Link className="menu-item" to="/dashboard"><span>{icon}</span>Kontrollpanel</Link></li>
       )}
