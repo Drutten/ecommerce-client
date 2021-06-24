@@ -15,7 +15,7 @@ const heart = <FontAwesomeIcon icon={faHeart}/>;
 
 const Navbar = (props) => {
 
-    const [cartItems, updateCart] = useContext(StateContext);
+    const [cartItems] = useContext(StateContext);
 
     const [isOpen, setIsOpen] = useState(false);
 

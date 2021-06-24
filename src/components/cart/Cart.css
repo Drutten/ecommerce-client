@@ -5,6 +5,20 @@
     font-family: 'Tajawal', sans-serif;
 }
 
+.empty-cart {
+    text-align: center;
+}
+
+.empty-cart h2 {
+    margin: 20px 0;
+    font-family: 'Tajawal', sans-serif; 
+}
+
+.empty-cart .link-button#empty-button {
+    display: inline-block;
+    width: 220px;
+}
+
 .cart-wrapper {
     margin: 0;
 }
@@ -21,7 +35,7 @@
     margin-top: 20px;
 }
 
-.total .link-button {
+.link-button {
     width: 90%;
     background-color: rgb(9, 97, 179);
     color: rgb(255, 255, 255);
@@ -32,11 +46,11 @@
     text-transform: uppercase;
 }
 
-.total .link-button:hover {
+.link-button:hover {
     text-decoration: underline;  
 }
 
-.total .link-button:last-child {
+.link-button:last-child {
     margin-bottom: 20px;
 }
 
@@ -54,6 +68,9 @@
     .sm-title {
         display: none;
     }
+    .empty-cart {
+        margin-top: 40px;
+    }
 }
 
 @media screen and (min-width: 680px) {
@@ -63,6 +80,11 @@
 }
 
 @media screen and (min-width: 1000px) {
+    .empty-cart {
+        text-align: left;
+        margin-top: 40px;
+        margin-left: 120px;
+    }
     .cart-wrapper {
         margin: 0;
     }
