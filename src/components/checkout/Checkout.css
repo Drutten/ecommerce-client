@@ -1,0 +1,83 @@
+.container {
+    text-align: center;
+    margin: 0 20px;
+}
+
+.container p {
+    margin: 0;
+}
+
+.drop-in-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.drop-in-buttons .drop-in-button {
+    width: 100%;
+    font-family: 'Tajawal', sans-serif;
+    padding: 8px 12px;
+    margin: 4px;
+    font-size: 16px;
+    text-decoration: none;
+    border: 1px solid rgb(79, 81, 80);
+    cursor: pointer;
+}
+
+.drop-in-buttons .drop-in-button:last-child {
+    background-color: rgb(9, 97, 179);
+    color: rgb(255, 255, 255);
+}
+
+.drop-in-buttons .drop-in-button:first-child:hover {
+    background-color: rgb(240, 239, 239);   
+}
+
+.drop-in-buttons .drop-in-button:last-child:hover {
+    background-color: rgb(9, 82, 150);   
+}
+
+.sm-title {
+    padding: 6px;
+    text-align: center;
+    font-size: 16px;
+    font-family: 'Tajawal', sans-serif;
+}
+
+.message {
+    background-color: rgb(192, 228, 163);
+    padding: 6px 10px;
+    border-radius: 4px;
+}
+
+.error {
+    background-color: rgb(223, 152, 150);
+    padding: 6px 10px;
+    border-radius: 4px;
+}
+
+.not-displayed {
+    display: none;
+}
+
+@media screen and (min-width: 501px) {
+    .sm-title {
+        display: none;
+    }
+    .container {
+        margin-top: 40px;   
+    }
+    .drop-in-buttons {
+        flex-direction: row;
+    }
+
+    .drop-in-buttons .drop-in-button {
+        width: auto;
+    }
+}
+
+@media screen and (min-width: 680px) {
+    .container {
+        text-align: left;
+        margin: 40px 80px;
+    }
+}

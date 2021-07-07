@@ -54,7 +54,7 @@ const Cart = () => {
 
                 {cartItems.length > 0 && <div className="total">
                     <span>Totalt att betala: <b>{getTotal()}</b> SEK</span>
-                    <Link to="/" className="link-button">Till kassan</Link>
+                    <Link to="/checkout" className="link-button">Till kassan</Link>
                     <Link to="/" className="link-button">Fortsätt handla</Link>
                 </div>}
 

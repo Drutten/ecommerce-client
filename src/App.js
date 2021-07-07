@@ -13,6 +13,7 @@ import AddCategory from './components/admin/addCategory/AddCategory';
 import AddProduct from './components/admin/addProduct/AddProduct';
 import Product from './components/product/Product';
 import Cart from './components/cart/Cart';
+import Checkout from './components/checkout/Checkout';
 import Page from './components/Page';
 
 import './App.css';
@@ -46,6 +47,12 @@ const App = () => {
           <Route exact path='/cart' render={(props) => (
             <Page title="Varukorg">
               <Cart {...props} />
+            </Page>
+          )}/>
+
+          <Route exact path='/checkout' render={(props) => (
+            <Page title="Kassa">
+              <Checkout {...props} />
             </Page>
           )}/>
 

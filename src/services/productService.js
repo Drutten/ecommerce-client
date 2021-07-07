@@ -26,6 +26,7 @@ export default class ProductService {
         return result.filter(item => item.category._id === categoryId);
     }
 
+    
     getProductsBySearch = async (queryParams) => {
         const query = queryString.stringify(queryParams)
         const response = await fetch(`${process.env.REACT_APP_API_URL}/search?${query}`, {
