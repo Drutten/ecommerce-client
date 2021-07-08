@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 import Layout from '../layout/Layout';
 import ProductCard from '../productCard/ProductCard';
@@ -23,6 +23,7 @@ const Home = () => {
     const categoryService = new CategoryService();
 
     const search =<FontAwesomeIcon icon={faSearch}/>
+    const spinner =<FontAwesomeIcon icon={faSpinner}/>
 
     
     const fetchProductsBySort = async (sortValue = sort) => {
@@ -98,17 +99,17 @@ const Home = () => {
 
 
     const endFetchWithError = (err) => {
-        setError(err);
         setLoading(false);
+        setError(err);
     }
 
 
     const endFetchWithSuccess = (result) => {
+        setLoading(false);
         if (result.length === 0) {
             setMessage('Inga produkter matchade din sökning');
         }
-        setProducts(result);
-        setLoading(false);
+        setProducts(result); 
     }
 
 
@@ -159,7 +160,7 @@ const Home = () => {
 
     const displayLoading = () => (
         <div className={ (loading) ? 'spinner' : 'not-displayed' }>
-            Laddar...
+            {spinner}
         </div>
     );
     
@@ -184,11 +185,11 @@ const Home = () => {
                 </form>
             </div>
 
-            {displayLoading()}
             {displayError()}
             {displayMessage()}
             
             <div className="product-wrapper">
+                {displayLoading()}
                 {products && products.map(p => 
                     <ProductCard key={p._id} product={p}></ProductCard>
                 )}

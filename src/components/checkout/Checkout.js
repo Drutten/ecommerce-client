@@ -1,6 +1,8 @@
 import { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import DropIn from 'braintree-web-drop-in-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 import { StateContext } from '../../StateContext';
 import Layout from '../layout/Layout';
@@ -10,18 +12,20 @@ import './Checkout.css';
 
 const Checkout = () => {
 
-    const [cartItems] = useContext(StateContext);
+    const [cartItems, updateCart] = useContext(StateContext);
 
     const [braintreeToken, setBraintreeToken] = useState(null);
     const [instance, setInstance] = useState({});
     // const [address, setAddress] = useState('');
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const authService = new AuthService();
     const braintreeService = new BraintreeService();
     const userId = authService.getLoggedInUser().user._id;
     const token = authService.getLoggedInUser().token;
+    const spinner  =<FontAwesomeIcon icon={faSpinner}/>
 
 
     useEffect(() => {
@@ -46,10 +50,12 @@ const Checkout = () => {
 
     const pay = () => {
         // send nonce to BE
+        setLoading(true);
         setError('');
         setMessage('');
         let nonce;
-        const nonceRequest = instance.requestPaymentMethod()
+        // const nonceRequest = 
+        instance.requestPaymentMethod()
         .then(result => {
             nonce = result.nonce;
             const paymentData = {
@@ -60,14 +66,16 @@ const Checkout = () => {
             .then(response => {
                 // console.log(response);
                 if (response.success) {
+                    setLoading(false);
+                    updateCart([]);
                     setMessage('Tack för ditt köp');
-                    // TO DO: empty cart
                     // TO DO: create order
                 }
 
             })
             .catch(err => {
                 console.log(err);
+                setLoading(false);
             });
         })
         .catch(error => {
@@ -82,7 +90,12 @@ const Checkout = () => {
             return (
                 <div onBlur={() => setError('')}>
                     <DropIn 
-                        options={{authorization: braintreeToken.clientToken}}
+                        options={{
+                            authorization: braintreeToken.clientToken,
+                            paypal: {
+                                flow: 'vault'
+                            }
+                        }}
                         onInstance={(instance) => (setInstance(instance))}
                     />
                     <div className="drop-in-buttons">
@@ -134,6 +147,13 @@ const Checkout = () => {
     )
 
 
+    const displayLoading = () => (
+        <div className={ (loading) ? 'spinner' : 'not-displayed' }>
+            {spinner}
+        </div>
+    );
+
+
 
     return (
         
@@ -158,6 +178,8 @@ const Checkout = () => {
                 ) : (
                     <div><h2>Varukorgen är tom</h2></div>
                 )}
+
+                {displayLoading()}
 
                 <div className="payment">
                     {displayDropIn()}

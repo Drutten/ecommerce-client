@@ -11,9 +11,14 @@ export const StateProvider = (props) => {
   }, [])
 
   
-  const updateCart = (updatedCart) => {
+  const updateCart = (updatedCart = []) => {
     if (storageIsAvailable('sessionStorage')) {
-      sessionStorage.setItem('cart', JSON.stringify(updatedCart));
+      if (updatedCart.length === 0) {
+        sessionStorage.removeItem('cart');  
+      }
+      else {
+        sessionStorage.setItem('cart', JSON.stringify(updatedCart));
+      } 
     }
     setCartItems(updatedCart);
   }
