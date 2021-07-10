@@ -5,20 +5,6 @@
     font-family: 'Tajawal', sans-serif;
 }
 
-.empty-cart {
-    text-align: center;
-}
-
-.empty-cart h2 {
-    margin: 20px 0;
-    font-family: 'Tajawal', sans-serif; 
-}
-
-.empty-cart .link-button#empty-button {
-    display: inline-block;
-    width: 220px;
-}
-
 .cart-wrapper {
     margin: 0;
 }
@@ -68,9 +54,6 @@
     .sm-title {
         display: none;
     }
-    .empty-cart {
-        margin-top: 40px;
-    }
 }
 
 @media screen and (min-width: 680px) {
@@ -80,12 +63,10 @@
 }
 
 @media screen and (min-width: 1000px) {
-    .empty-cart {
-        text-align: left;
-        margin-top: 40px;
-        margin-left: 120px;
-    }
     .cart-wrapper {
         margin: 0;
+    }
+    .empty-cart-container {
+        margin-left: 80px;
     }
 }

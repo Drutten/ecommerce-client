@@ -1,3 +1,33 @@
+/* empty cart */
+.empty-cart {
+  text-align: center;
+}
+
+.empty-cart h2 {
+  margin: 20px 0;
+  font-family: 'Tajawal', sans-serif; 
+}
+
+.empty-cart .link-button#empty-button {
+  display: inline-block;
+  width: 220px;
+}
+
+@media screen and (min-width: 501px) {
+  .empty-cart {
+      margin-top: 40px;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .empty-cart {
+      text-align: left;
+      margin-left: 0;
+  }
+}
+
+
+/* spinner */
 .spinner {
   animation: spin infinite 5s linear;
   color: rgb(9, 97, 179);
@@ -14,10 +44,10 @@
 }
 
 @keyframes spin {
-from {
-  transform: rotate(0deg);
-}
-to {
-  transform: rotate(360deg);
-}
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

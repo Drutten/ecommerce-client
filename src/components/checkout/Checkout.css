@@ -1,11 +1,22 @@
 .container {
     text-align: center;
-    margin: 0 20px;
+    margin: 0 20px 20px;
     position: relative;
 }
 
 .container p {
     margin: 0; 
+}
+
+.address-form-group {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+}
+
+.address-form-group label {
+    text-align: left; 
+    margin-bottom: 10px; 
 }
 
 .drop-in-buttons {
@@ -65,12 +76,11 @@
         display: none;
     }
     .container {
-        margin-top: 40px;   
+        margin-top: 20px; 
     }
     .drop-in-buttons {
         flex-direction: row;
     }
-
     .drop-in-buttons .drop-in-button {
         width: auto;
     }
@@ -79,6 +89,6 @@
 @media screen and (min-width: 680px) {
     .container {
         text-align: left;
-        margin: 40px 80px;
+        margin: 20px 80px;
     }
 }

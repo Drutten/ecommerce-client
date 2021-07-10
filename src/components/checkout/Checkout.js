@@ -8,6 +8,7 @@ import { StateContext } from '../../StateContext';
 import Layout from '../layout/Layout';
 import BraintreeService from '../../services/braintreeService';
 import AuthService from '../../services/authService';
+import OrderService from '../../services/orderService';
 import './Checkout.css';
 
 const Checkout = () => {
@@ -16,13 +17,14 @@ const Checkout = () => {
 
     const [braintreeToken, setBraintreeToken] = useState(null);
     const [instance, setInstance] = useState({});
-    // const [address, setAddress] = useState('');
+    const [address, setAddress] = useState('');
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
     const authService = new AuthService();
     const braintreeService = new BraintreeService();
+    const orderService = new OrderService();
     const userId = authService.getLoggedInUser().user._id;
     const token = authService.getLoggedInUser().token;
     const spinner  =<FontAwesomeIcon icon={faSpinner}/>
@@ -54,7 +56,6 @@ const Checkout = () => {
         setError('');
         setMessage('');
         let nonce;
-        // const nonceRequest = 
         instance.requestPaymentMethod()
         .then(result => {
             nonce = result.nonce;
@@ -65,13 +66,23 @@ const Checkout = () => {
             braintreeService.processPayment(userId, token, paymentData)
             .then(response => {
                 // console.log(response);
-                if (response.success) {
+                const orderData = {
+                    products: cartItems,
+                    transaction_id: response.transaction.id,
+                    amount: response.transaction.amount,
+                    address: address
+                }
+                orderService.createOrder(userId, token, orderData)
+                .then(res => {
                     setLoading(false);
+                    setAddress('');
                     updateCart([]);
                     setMessage('Tack för ditt köp');
-                    // TO DO: create order
-                }
-
+                })
+                .catch(error => {
+                    setLoading(false);
+                    console.log(error);
+                })
             })
             .catch(err => {
                 console.log(err);
@@ -84,11 +95,26 @@ const Checkout = () => {
     }
 
 
+    const handleAddress = (e) => {
+        setAddress(e.target.value);
+    }
+
+
 
     const displayDropIn = () => {
         if (braintreeToken && cartItems.length > 0) {
             return (
                 <div onBlur={() => setError('')}>
+                    <div className="address-form-group">
+                        <label htmlFor="address">Postadress</label>
+                        <textarea
+                            className="address"
+                            onChange={handleAddress}
+                            id="address"
+                            value={address}
+                            placeholder="Ange gatuadress, postnummer och postort"
+                        />
+                    </div>
                     <DropIn 
                         options={{
                             authorization: braintreeToken.clientToken,
@@ -176,7 +202,10 @@ const Checkout = () => {
                     <p>Att betala: <b>{getTotal()}</b> SEK</p>
                 </div>
                 ) : (
-                    <div><h2>Varukorgen är tom</h2></div>
+                    <div className="empty-cart">
+                        <h2>Din varukorg är tom</h2>
+                        <Link to="/" className="link-button" id="empty-button">Till butiken</Link>
+                    </div>
                 )}
 
                 {displayLoading()}

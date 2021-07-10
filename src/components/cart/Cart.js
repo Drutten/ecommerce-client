@@ -41,9 +41,11 @@ const Cart = () => {
                 <h1>Varukorg</h1>
             </div>
 
-            {(cartItems.length === 0) && <div className="empty-cart">
-                <h2>Din varukorg är tom</h2>
-                <Link to="/" className="link-button" id="empty-button">Fortsätt handla</Link>
+            {(cartItems.length === 0) && <div className="empty-cart-container">
+                <div className="empty-cart">
+                    <h2>Din varukorg är tom</h2>
+                    <Link to="/" className="link-button" id="empty-button">Fortsätt handla</Link>
+                </div>
             </div>}
             
             <div className="cart-wrapper">
