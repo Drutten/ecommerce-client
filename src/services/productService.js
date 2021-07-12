@@ -10,6 +10,7 @@ export default class ProductService {
     }
     
 
+
     getProducts = async (sort) => {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/products?sort=${sort}&order=desc&limit=6`, {
             method: "GET"
@@ -18,15 +19,25 @@ export default class ProductService {
     }
 
 
-    getProductsByCategory = async (sort, categoryId) => {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/products?sort=${sort}&order=desc`, {
-            method: "GET"
+
+    getProductsByCategory = async (sort, category) => {
+        const data = {
+            sort: sort,
+            category: category
+        }
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/filter`, {
+            method: "POST",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
         });
-        let result = await response.json();
-        return result.filter(item => item.category._id === categoryId);
+        return await response.json();
     }
 
     
+
     getProductsBySearch = async (queryParams) => {
         const query = queryString.stringify(queryParams)
         const response = await fetch(`${process.env.REACT_APP_API_URL}/search?${query}`, {
@@ -34,6 +45,7 @@ export default class ProductService {
         });
         return await response.json(); 
     }
+
 
 
     createProduct = async (userId, token, product) => {

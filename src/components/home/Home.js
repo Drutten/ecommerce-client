@@ -26,6 +26,7 @@ const Home = () => {
     const spinner =<FontAwesomeIcon icon={faSpinner}/>
 
     
+
     const fetchProductsBySort = async (sortValue = sort) => {
         let result;
         prepareFetch();
@@ -45,17 +46,19 @@ const Home = () => {
     }
 
 
-    const fetchProductsByCategory = async (categoryId) => {
+
+    const fetchProductsByCategory = async (category) => {
         prepareFetch();
-        const result = await productService.getProductsByCategory(sort, categoryId);
+        const result = await productService.getProductsByCategory(sort, category);
         if (result.error) {
             endFetchWithError(result.error);
         }
         else {
             endFetchWithSuccess(result);
-            setCurrentCategory(categoryId);
+            setCurrentCategory(category);
         }
     }
+
 
 
     const fetchProductsBySearch = async () => {
@@ -77,6 +80,7 @@ const Home = () => {
     }
 
 
+
     const fetchAll = async () => {
         prepareFetch();
         const result = await productService.getProducts(sort);
@@ -91,6 +95,7 @@ const Home = () => {
     }
 
 
+
     const prepareFetch = () => {
         setError('');
         setMessage('');
@@ -98,10 +103,12 @@ const Home = () => {
     }
 
 
+
     const endFetchWithError = (err) => {
         setLoading(false);
         setError(err);
     }
+
 
 
     const endFetchWithSuccess = (result) => {
@@ -113,9 +120,11 @@ const Home = () => {
     }
 
 
+
     useEffect(() => {
         fetchProductsBySort('createdAt');
     }, []);
+
 
 
     useEffect(() => {
@@ -132,9 +141,11 @@ const Home = () => {
     }, []);
 
 
+
     const handleChangeSearch = (event) => {
         setSearchText(event.target.value);
     }
+
 
 
     const handleSubmitSearch = (event) => {
@@ -144,11 +155,13 @@ const Home = () => {
     }
 
 
+
     const displayError = () => (
         <div className={ (error) ? 'error' : 'not-displayed' }>
             { error }
         </div>
     )
+
 
 
     const displayMessage = () => (
@@ -158,11 +171,13 @@ const Home = () => {
     )
 
 
+
     const displayLoading = () => (
         <div className={ (loading) ? 'spinner' : 'not-displayed' }>
             {spinner}
         </div>
     );
+    
     
 
     return (

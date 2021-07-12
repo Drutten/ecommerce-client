@@ -74,7 +74,8 @@ const Menu = (props) => {
           <li
             key={item._id} 
             className="category-item"
-            onClick={() => onFetchByCategory(item._id)}>
+            onClick={() => onFetchByCategory(item)}
+          >
             <div className="menu-item"><span></span>{addCapitalLetter(item.name)}</div>
           </li> 
         )
