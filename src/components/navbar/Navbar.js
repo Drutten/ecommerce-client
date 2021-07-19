@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, useRef, Fragment } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faHeart, faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 
@@ -19,18 +19,13 @@ const Navbar = (props) => {
 
     const [isOpen, setIsOpen] = useState(false);
 
+    const history = useHistory();
+
     const node = useRef();
 
     const authService = new AuthService();
 
-    const getActiveClass = (history, path) => {
-        if (history.location.pathname === path) {
-            return 'active';
-        }
-        else {
-            return '';
-        }
-    }
+    
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
@@ -80,16 +75,17 @@ const Navbar = (props) => {
                             {!authService.isAuthenticated() && (
                                 <Fragment>
                                     <li className="dropdown-item">
-                                        <Link className={`dropdown-link ${getActiveClass(props.history, '/signin')}`} to="/signin">Logga in</Link>
+                                        <Link className={`dropdown-link`} to="/signin">Logga in</Link>
                                     </li>
                                     <li className="dropdown-item">
-                                        <Link className={`dropdown-link ${getActiveClass(props.history, '/signup')}`} to="/signup">Ny kund</Link>
+                                        <Link className={`dropdown-link`} to="/signup">Ny kund</Link>
                                     </li>
                                 </Fragment>
                             )}
                             {authService.isAuthenticated() && (
                                 <li className="dropdown-item" onClick={ () => authService.signout(() => {
-                                    props.history.push('/');
+                                    history.push('/');
+                                    setIsOpen(false);
                                 })}>
                                     <span className="dropdown-link">Logga ut</span>
                                 </li>    
@@ -103,4 +99,4 @@ const Navbar = (props) => {
     )
 }
 
-export default withRouter(Navbar);
+export default Navbar;

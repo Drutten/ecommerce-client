@@ -23,7 +23,7 @@ const Dashboard = () => {
                 {user ? (
                     <ul className="profile-list">
                         <li className="profile-list-item"><span>Namn:</span><span className="value">{user.name}</span></li>
-                        <li className="profile-list-item"><span>E-mail:</span><span className="value">{user.email}</span></li>
+                        <li className="profile-list-item"><span>Email:</span><span className="value">{user.email}</span></li>
                         <li className="profile-list-item"><span>Kontotyp:</span><span className="value">{user.role === 1 ? 'Admin' : 'Medlem'}</span></li>
                     </ul>
                 ) : ''

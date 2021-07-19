@@ -6,9 +6,24 @@ export const StateProvider = (props) => {
 
   const [cartItems, setCartItems] = useState([]);
 
+
   useEffect(() => {
     getCart();
-  }, [])
+  }, []);
+
+
+  const storageIsAvailable = (type) => {
+    let storage;
+    try {
+        storage = window[type];
+        var x = 'test';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+    } catch (e) {
+        return false;
+    }
+  }
 
   
   const updateCart = (updatedCart = []) => {
@@ -23,6 +38,7 @@ export const StateProvider = (props) => {
     setCartItems(updatedCart);
   }
 
+  
   const getCart = () => {
     if (storageIsAvailable('sessionStorage')) {
       if (sessionStorage.getItem('cart')) {
@@ -30,20 +46,6 @@ export const StateProvider = (props) => {
       }
     }
   }
-
-  const storageIsAvailable = (type) => {
-    let storage;
-    try {
-        storage = window[type];
-        var x = 'test';
-        storage.setItem(x, x);
-        storage.removeItem(x);
-        return true;
-    } catch (e) {
-        return false;
-    }
-}
-
 
 
   return (

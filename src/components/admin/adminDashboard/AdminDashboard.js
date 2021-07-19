@@ -10,22 +10,12 @@ const AdminDashboard = () => {
     
 
     const [menuItems] = useState([
-        {id: 1, name: 'Kategorier', path: '/create/category', icon: 'icon'},
-        {id: 2, name: 'Produkter', path: '/create/product', icon: 'icon'},
-        {id: 3, name: 'Inställningar', path: '/', icon: 'icon'}
+        {id: 1, name: 'Ordrar', path: '/orders', icon: 'icon'},
+        {id: 2, name: 'Ny kategori', path: '/create/category', icon: 'icon'},
+        {id: 3, name: 'Ny produkt', path: '/create/product', icon: 'icon'},
+        {id: 4, name: 'Inställningar', path: '/', icon: 'icon'}
     ]);
 
-    // const [user, setUser] = useState(null);
-
-    // useEffect(() => {
-    //     const authService = new AuthService();
-    //     if (authService.getLoggedInUser()) {
-    //         console.log(authService.getLoggedInUser().user);
-    //         console.log('hello');
-    //         setUser(authService.getLoggedInUser().user)
-    //     }
-    //     return () => {console.log('Bye')}  
-    // }, []);
 
     const authService = new AuthService();
 
@@ -39,7 +29,7 @@ const AdminDashboard = () => {
                 {user ? (
                     <ul className="profile-list">
                         <li className="profile-list-item"><span>Namn:</span><span className="value">{user.name}</span></li>
-                        <li className="profile-list-item"><span>E-mail:</span><span className="value">{user.email}</span></li>
+                        <li className="profile-list-item"><span>Email:</span><span className="value">{user.email}</span></li>
                         <li className="profile-list-item"><span>Kontotyp:</span><span className="value">{user.role === 1 ? 'Admin' : 'Medlem'}</span></li>
                     </ul>
                 ) : ''

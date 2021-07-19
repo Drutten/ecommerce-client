@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import AuthService from '../../../services/authService';
 import Layout from '../../layout/Layout';
+import DashboardCard from '../../dashboardCard/DashboardCard';
 import './AddCategory.css';
 import CategoryService from '../../../services/categoryService';
 
@@ -12,9 +13,10 @@ const AddCategory = () => {
     const [success, setSuccess] = useState(false);
     
     const menuItems = [
-        {id: 1, name: 'Kategorier', path: '/create/category', icon: 'icon'},
-        {id: 2, name: 'Produkter', path: '/create/product', icon: 'icon'},
-        {id: 3, name: 'Inställningar', path: '/', icon: 'icon'}
+        {id: 1, name: 'Ordrar', path: '/orders', icon: 'icon'},
+        {id: 2, name: 'Ny kategori', path: '/create/category', icon: 'icon'},
+        {id: 3, name: 'Ny produkt', path: '/create/product', icon: 'icon'},
+        {id: 4, name: 'Inställningar', path: '/', icon: 'icon'}
     ];
 
     const authService = new AuthService();
@@ -75,12 +77,13 @@ const AddCategory = () => {
     );
 
     return (
-        <Layout title="Ny Kategori" menuItems={menuItems}>
-            <div>
+        <Layout title="Ny kategori" menuItems={menuItems}>
+            <DashboardCard title="Ny kategori">
                 {displayError()}
                 {displaySuccess()}
-                {categoryForm()}
-            </div>
+                {categoryForm()}   
+            </DashboardCard>
+            
         </Layout>
     )
 }

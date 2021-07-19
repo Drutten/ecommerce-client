@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import AuthService from '../../../services/authService';
 import Layout from '../../layout/Layout';
+import DashboardCard from '../../dashboardCard/DashboardCard';
 import './AddProduct.css';
 import ProductService from '../../../services/productService';
 import CategoryService from '../../../services/categoryService';
@@ -43,9 +44,10 @@ const AddProduct = () => {
     
     
     const menuItems = [
-        {id: 1, name: 'Kategorier', path: '/create/category', icon: 'icon'},
-        {id: 2, name: 'Produkter', path: '/create/product', icon: 'icon'},
-        {id: 3, name: 'Inställningar', path: '/', icon: 'icon'}
+        {id: 1, name: 'Ordrar', path: '/orders', icon: 'icon'},
+        {id: 2, name: 'Ny kategori', path: '/create/category', icon: 'icon'},
+        {id: 3, name: 'Ny produkt', path: '/create/product', icon: 'icon'},
+        {id: 4, name: 'Inställningar', path: '/', icon: 'icon'}
     ];
 
     const authService = new AuthService();
@@ -223,12 +225,12 @@ const AddProduct = () => {
 
     return (
         <Layout title="Ny Produkt" menuItems={menuItems}>
-            <div>
+            <DashboardCard title="Ny kategori">
                 {displayLoading()}
                 {displayError()}
                 {displaySuccess()}
-                {productForm()}
-            </div>
+                {productForm()}  
+            </DashboardCard>
         </Layout>
     )
 }
