@@ -57,6 +57,7 @@ const Orders = () => {
 
     useEffect(() => {
         fetchOrders(userId, token);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 
@@ -73,6 +74,11 @@ const Orders = () => {
 
     const viewOrder = (item) => {
         setSelectedItem(item);    
+    }
+
+
+    const backToList = () => {
+        setSelectedItem(null);
     }
 
 
@@ -138,7 +144,11 @@ const Orders = () => {
                 </div>}
 
                 { (selectedItem) ? (
-                    <OrderDetails item={selectedItem} removeItem={removeOrder} updateItem={updateOrder} />
+                    <OrderDetails 
+                        item={selectedItem} 
+                        removeItem={removeOrder} 
+                        updateItem={updateOrder}
+                        backToList={backToList} />
                 )
                 : ''
                 }

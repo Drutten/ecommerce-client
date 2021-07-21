@@ -65,14 +65,16 @@ const App = () => (
           )}
         />
 
-        <Route
+        <PrivateRoute
           exact
           path="/checkout"
-          render={(props) => (
-            <Page title="Kassa">
-              <Checkout {...props} />
-            </Page>
-          )}
+          title="Kassa"
+          component={Checkout}
+          // render={(props) => (
+          //   <Page title="Kassa">
+          //     <Checkout {...props} />
+          //   </Page>
+          // )}
         />
 
         <Route

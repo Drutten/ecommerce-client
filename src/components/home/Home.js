@@ -123,6 +123,7 @@ const Home = () => {
 
     useEffect(() => {
         fetchProductsBySort('createdAt');
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 
@@ -138,6 +139,7 @@ const Home = () => {
             }
         }
         fetchCategories();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 

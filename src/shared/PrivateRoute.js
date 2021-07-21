@@ -10,7 +10,8 @@ const PrivateRoute = ({ component: Component, title = '', ...rest }) => {
         <Route
             {...rest}
             render={(props) =>
-            authService.isAuthenticated() && authService.getLoggedInUser().user.role === 0 ? (
+            authService.isAuthenticated() 
+            && (authService.getLoggedInUser().user.role === 0 || authService.getLoggedInUser().user.role === 1) ? (
                 <Page title={title}>
                     <Component {...props}/>
                 </Page>

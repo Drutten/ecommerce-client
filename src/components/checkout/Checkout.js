@@ -25,13 +25,16 @@ const Checkout = () => {
     const authService = new AuthService();
     const braintreeService = new BraintreeService();
     const orderService = new OrderService();
-    const userId = authService.getLoggedInUser().user._id;
-    const token = authService.getLoggedInUser().token;
+    const userId = (authService.isAuthenticated()) ? authService.getLoggedInUser().user._id : '';
+    const token = (authService.isAuthenticated()) ? authService.getLoggedInUser().token : '';
     const spinner  =<FontAwesomeIcon icon={faSpinner}/>
 
 
     useEffect(() => {
-        fetchBraintreeToken(userId, token);
+        if (authService.isAuthenticated()) {
+            fetchBraintreeToken(userId, token);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 
@@ -194,7 +197,7 @@ const Checkout = () => {
                 <h1>Kassa</h1>
             </div>
 
-            <div className="container">
+            { (authService.isAuthenticated()) && <div className="container">
                 {cartItems.length ? (
                 <div className="total">
                     <h2>Orderöversikt</h2>
@@ -213,7 +216,7 @@ const Checkout = () => {
                 <div className="payment">
                     {displayDropIn()}
                 </div>
-            </div>
+            </div>}
             
             
         </Layout>
