@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
@@ -9,16 +8,19 @@ import DashboardCard from '../../dashboardCard/DashboardCard';
 import Layout from '../../layout/Layout';
 import OrderItem from '../orderItem/OrderItem';
 import OrderDetails from '../orderDetails/OrderDetails';
+import EditOrder from '../editOrder/EditOrder';
 import './Orders.css';
 
 
 const Orders = () => {
 
     const [orders, setOrders] = useState([]);
+    const [statusOptions, setStatusOptions] = useState([]);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
+    const [editMode, setEditMode] = useState(false);
 
     const [menuItems] = useState([
         {id: 1, name: 'Ordrar', path: '/orders', icon: 'icon'},
@@ -49,17 +51,29 @@ const Orders = () => {
             if (result.length === 0) {
                 setMessage('Inga ordrar hittades');
             }
-            console.log(result);
+            // console.log(result);
+            updateSelectedItem(result);
             setOrders(result);
         }    
     }
 
 
+    const fetchStatusOptions = async () => {
+        const result = await orderService.getStatusOptions(userId, token);
+        if (result.error) {
+            console.log(result.error);
+        }
+        else {
+            setStatusOptions(result);
+        }
+    }
+
+
     useEffect(() => {
         fetchOrders(userId, token);
+        fetchStatusOptions(userId, token);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
 
 
     const removeOrder = (item) => {
@@ -67,8 +81,10 @@ const Orders = () => {
     }
 
 
-    const updateOrder = (updatedItem) => {
-        // BE
+    const enterEditMode = (item = null) => {
+        const order = (selectedItem) ? selectedItem : item;
+        setSelectedItem(order);
+        setEditMode(true);
     }
 
 
@@ -82,14 +98,31 @@ const Orders = () => {
     }
 
 
-    const getIndex = (id) => {
-        let index = -1;
-        orders.forEach((item, i) => {
-            if (item._id === id) index = i;
-        });
-        return index;
+    const leaveEditMode = () => {
+        setEditMode(false);
     }
 
+
+    const updateStatus = async (status, orderId) => {
+        const result = await orderService.updateOrderStatus(userId, token, orderId, status);
+        if (result.error) {
+            setError('Status kunde inte uppdateras');
+        }
+        else {
+            fetchOrders(userId, token);
+        }
+    }
+
+
+    const updateSelectedItem = (list) => {
+        if (selectedItem) {
+            list.forEach(item => {
+                if (selectedItem._id === item._id) {
+                    setSelectedItem({...item});
+                }
+            });
+        }  
+    }
 
 
     const displayError = () => (
@@ -99,7 +132,6 @@ const Orders = () => {
     )
 
 
-
     const displayMessage = () => (
         <div className={ (message) ? 'message' : 'not-displayed' }>
             {message}
@@ -107,13 +139,11 @@ const Orders = () => {
     )
 
 
-
     const displayLoading = () => (
         <div className={ (loading) ? 'spinner' : 'not-displayed' }>
             {spinner}
         </div>
     );
-
 
 
     const setItemBackground = (index) => {
@@ -134,8 +164,7 @@ const Orders = () => {
                             {orders.map((item, i) => <OrderItem
                                 key={item._id}
                                 item={item}
-                                removeItem={removeOrder}
-                                updateItem={updateOrder}
+                                enterEditMode={enterEditMode}
                                 viewItem={viewOrder}
                                 background={setItemBackground(i)}
                             />)}
@@ -143,15 +172,27 @@ const Orders = () => {
                     ) : ''}
                 </div>}
 
-                { (selectedItem) ? (
+                { (selectedItem && !editMode) ? (
                     <OrderDetails 
                         item={selectedItem} 
                         removeItem={removeOrder} 
-                        updateItem={updateOrder}
+                        enterEditMode={enterEditMode}
                         backToList={backToList} />
                 )
                 : ''
                 }
+
+                {(selectedItem && editMode) ? (
+                    <EditOrder
+                        item={selectedItem}
+                        statusOptions={statusOptions}
+                        updateStatus={updateStatus}
+                        removeItem={removeOrder}
+                        leaveEditMode={leaveEditMode} />
+                )
+                : ''
+                }
+            
 
             </DashboardCard>
         </Layout>

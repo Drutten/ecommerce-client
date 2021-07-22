@@ -1,21 +1,22 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPen, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import Moment from 'react-moment';
 import 'moment-timezone';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
-import './OrderDetails.css';
+import './EditOrder.css';
 
-
-const OrderDetails = ({item, removeItem, enterEditMode, backToList}) => {
+const EditOrder = ({item, statusOptions, updateStatus, removeItem, leaveEditMode}) => {
     
     const trash  =<FontAwesomeIcon icon={faTrash} />
-    const pen  =<FontAwesomeIcon icon={faPen} />
     const back  =<FontAwesomeIcon icon={faChevronLeft} />
-
 
 
     const remove = () => {}
 
+
+    const handleStatusChange = (e, orderId) => {
+        updateStatus(e.target.value, orderId);
+    }
 
 
     const displayOrderInfo = (key, value) => (
@@ -36,11 +37,27 @@ const OrderDetails = ({item, removeItem, enterEditMode, backToList}) => {
 
     const displayButtons = () => (
         <div className="order-info-buttons">
-            <button onClick={backToList}>{back} Tillbaka</button>
-            <button onClick={enterEditMode}>{pen} Ändra</button>
+            <button onClick={leaveEditMode}>{back} Tillbaka</button>
             <button>{trash} Ta bort</button>
         </div>    
     )
+
+
+    const displayEditStatus = () => {
+        if (statusOptions.length > 0) {
+            return(
+            <div className="edit-status-form">
+                <label htmlFor="select-status">Status: {item.status}</label><br />
+                <select id="select-status" onChange={(e) => handleStatusChange(e, item._id) }>
+                    <option>Ändra status</option>
+                    {statusOptions.map((status, i) => (
+                        <option key={i} value={status}>{status}</option>
+                    ))}
+                </select>
+            </div>   
+            )
+        }
+    }
   
     
 
@@ -52,7 +69,7 @@ const OrderDetails = ({item, removeItem, enterEditMode, backToList}) => {
                     <span>Orderid: </span>
                     <span>{item._id}</span>
                 </h2>
-                {displayOrderInfo('Status: ', item.status)}
+                {displayEditStatus()}
                 <div className="order-info">
                     <span>Skapad: </span>
                     <Moment fromNow>{item.createdAt}</Moment>
@@ -73,7 +90,6 @@ const OrderDetails = ({item, removeItem, enterEditMode, backToList}) => {
                             {displayProductInfo('Produkt: ', product.name)}
                             {displayProductInfo('Id: ', product._id)}
                             {displayProductInfo('Styckpris: ', product.price + ' SEK')}
-                            {/* {displayProductInfo('Antal: ', product.count)} */}
                         </li>
                     ))}
                 </ul>
@@ -83,4 +99,4 @@ const OrderDetails = ({item, removeItem, enterEditMode, backToList}) => {
     )
 }
 
-export default OrderDetails;
+export default EditOrder;

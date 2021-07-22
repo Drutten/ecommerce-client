@@ -52,6 +52,18 @@
     padding: 20px 30px;
 }
 
+.edit-status-form label{
+    display: inline-block;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.edit-status-form #select-status{
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    font-size: 14px;
+}
+
 @media(min-width: 600px){
     .order-info, .order-product{
         flex-flow: row wrap;

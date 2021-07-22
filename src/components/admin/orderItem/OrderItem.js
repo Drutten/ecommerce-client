@@ -1,22 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPen, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faEye } from '@fortawesome/free-solid-svg-icons';
 
 import './OrderItem.css';
 
 
-const OrderItem = ({item, removeItem, updateItem, viewItem, background}) => {
+const OrderItem = ({item, enterEditMode, viewItem, background}) => {
     
-    const trash  =<FontAwesomeIcon icon={faTrash}/>
     const pen  =<FontAwesomeIcon icon={faPen}/>
     const eye  =<FontAwesomeIcon icon={faEye}/>
-
-
-
-    const remove = () => {}
-
-
-
-    const update = (item) => {}
 
 
 
@@ -35,8 +26,7 @@ const OrderItem = ({item, removeItem, updateItem, viewItem, background}) => {
 
             <div className="icons">
                 <span onClick={view}>{eye}</span>
-                <span>{pen}</span>
-                <span>{trash}</span> 
+                <span onClick={()=> enterEditMode(item)}>{pen}</span> 
             </div>
         </li>
     )
