@@ -3,3 +3,19 @@
     padding: 0;
     list-style-type: none;
 }
+
+.not-displayed {
+    display: none;
+}
+
+.message {
+    background-color: rgb(192, 228, 163);
+    padding: 6px 10px;
+    border-radius: 4px;
+}
+
+.error {
+    background-color: rgb(223, 152, 150);
+    padding: 6px 10px;
+    border-radius: 4px;
+}

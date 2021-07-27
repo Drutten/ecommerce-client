@@ -1,22 +1,19 @@
-import { useState } from 'react';
-
 import AuthService from '../../services/authService';
+import History from '../history/History';
 import DashboardCard from '../dashboardCard/DashboardCard';
 import Layout from '../layout/Layout';
 import './Dashboard.css';
 
 const Dashboard = () => {
 
-    const [menuItems] = useState([
-        {id: 1, name: 'Varukorg', path: '/', icon: 'icon'},
-        {id: 2, name: 'Inställningar', path: '/', icon: 'icon'}
-    ]);
-
     const authService = new AuthService();
 
-    const user = (authService.getLoggedInUser()) ? authService.getLoggedInUser().user : null;
-    console.log(user);
+    const user = authService.getLoggedInUser().user;
+    const token = authService.getLoggedInUser().token;
 
+    const menuItems = [];
+
+    
     return (
         <Layout title="Kontrollpanel" menuItems={menuItems}>
             <DashboardCard title="Profil">
@@ -31,7 +28,7 @@ const Dashboard = () => {
             </DashboardCard>
 
             <DashboardCard title="Historik">
-                Historik
+                <History user={user} token={token} />
             </DashboardCard>
         </Layout>
     )

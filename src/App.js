@@ -15,6 +15,7 @@ import AddProduct from './components/admin/addProduct/AddProduct';
 import Product from './components/product/Product';
 import Cart from './components/cart/Cart';
 import Checkout from './components/checkout/Checkout';
+import Profile from './components/profile/Profile';
 import Orders from './components/admin/orders/Orders';
 import Page from './components/Page';
 
@@ -75,6 +76,13 @@ const App = () => (
           //     <Checkout {...props} />
           //   </Page>
           // )}
+        />
+
+        <PrivateRoute
+          exact
+          path="/profile/:userId"
+          title="Profil"
+          component={Profile}
         />
 
         <Route

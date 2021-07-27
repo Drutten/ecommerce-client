@@ -1,0 +1,33 @@
+.history-list {
+    list-style-type: none;
+    padding: 10px 20px;
+}
+
+.history-item {
+    display: flex;
+    flex-direction: column;
+    padding: 14px;
+    margin: 20px 0;
+    border: 1px solid rgb(209, 208, 208);
+    word-wrap: break-word;
+}
+
+.history-item:first-child {
+    margin-top: 0;
+}
+
+.history-item:last-child {
+    margin-bottom: 0;
+}
+
+.history-product {
+    margin: 10px 0;
+}
+
+.history-product:first-child {
+    margin-top: 0;
+}
+
+.history-product:last-child {
+    margin-bottom: 0;
+}

@@ -25,8 +25,7 @@ const Orders = () => {
     const [menuItems] = useState([
         {id: 1, name: 'Ordrar', path: '/orders', icon: 'icon'},
         {id: 2, name: 'Ny kategori', path: '/create/category', icon: 'icon'},
-        {id: 3, name: 'Ny produkt', path: '/create/product', icon: 'icon'},
-        {id: 4, name: 'Inställningar', path: '/', icon: 'icon'}
+        {id: 3, name: 'Ny produkt', path: '/create/product', icon: 'icon'}
     ]);
 
     const authService = new AuthService();

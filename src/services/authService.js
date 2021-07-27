@@ -1,6 +1,6 @@
 export default class AuthService {
-    signup = async (user) => {
-        
+
+    signup = async (user) => { 
         const response = await fetch(`${process.env.REACT_APP_API_URL}/signup`, {
             method: 'POST',
             headers: {
@@ -13,7 +13,6 @@ export default class AuthService {
     }
 
     signin = async (user) => {
-        
         const response = await fetch(`${process.env.REACT_APP_API_URL}/signin`, {
             method: 'POST',
             headers: {
@@ -57,6 +56,31 @@ export default class AuthService {
         }
     }
 
+    getUser = async (userId, token) => {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return await response.json();      
+    }
+
+    updateUser = async (userId, token, user) => {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(user)
+        });
+        return await response.json();
+    }
+
     getLoggedInUser = () => {
         let user = null;
         if (typeof window !== 'undefined') {
@@ -65,5 +89,16 @@ export default class AuthService {
             }       
         }
         return user;  
+    }
+
+    updateLoggedInUser = (updatedUser, next) => {
+        if (typeof window !== 'undefined') {
+            if (localStorage.getItem('jwt')) {
+                let auth = JSON.parse(localStorage.getItem('jwt'));
+                auth.user = updatedUser;
+                localStorage.setItem('jwt', JSON.stringify(auth));
+                next();
+            }       
+        }  
     }
 }

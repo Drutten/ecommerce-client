@@ -1,3 +1,38 @@
 .profile-list-item span:last-child {
     margin-left: 6px;
 }
+
+.profile-list {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    margin: 0;
+    padding: 20px;
+}
+
+.profile-list-item {
+    display: flex;
+    flex-direction: column;
+    padding: 14px;
+    margin: 10px 0;
+    border: 1px solid rgb(209, 208, 208);
+    word-wrap: break-word;
+}
+
+.profile-list-item .value {
+    min-width: 200px;
+}
+
+
+@media(min-width: 600px){
+    .profile-list-item {
+        flex-flow: row wrap;
+        justify-content: space-between;
+    }   
+}
+
+@media(min-width: 800px){
+    .profile-list-item .value {
+        min-width: 400px;
+    }   
+}

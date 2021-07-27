@@ -12,6 +12,19 @@ export default class OrderService {
     }
 
 
+    getPurchaseHistory = async (userId, token) => {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/orders/user/${userId}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return await response.json();   
+    }
+
+
     getStatusOptions = async (userId, token) => {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/orders/status-options/${userId}`, {
             method: 'GET',
