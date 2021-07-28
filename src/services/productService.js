@@ -11,11 +11,11 @@ export default class ProductService {
     
 
 
-    getProducts = async (sort) => {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/products?sort=${sort}&order=desc&limit=6`, {
+    getProducts = async (sort = 'createdAt', order = 'desc', limit = '') => {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/products?sort=${sort}&order=${order}&limit=${limit}`, {
             method: "GET"
         });
-        return await response.json();    
+        return await response.json();   
     }
 
 
@@ -56,6 +56,34 @@ export default class ProductService {
                 Authorization: `Bearer ${token}`
             },
             body: product
+        });
+        return await response.json();    
+    }
+
+
+
+    updateProduct = async (productId, userId, token, product) => {
+        console.log(product);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/products/${productId}/${userId}`, {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                Authorization: `Bearer ${token}`
+            },
+            body: product
+        });
+        return await response.json();    
+    }
+
+
+
+    deleteProduct = async (productId, userId, token) => {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/products/${productId}/${userId}`, {
+            method: 'DELETE',
+            headers: {
+                Accept: 'application/json',
+                Authorization: `Bearer ${token}`
+            }
         });
         return await response.json();    
     }

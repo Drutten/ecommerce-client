@@ -73,7 +73,7 @@ const OrderDetails = ({item, removeItem, enterEditMode, backToList}) => {
                             {displayProductInfo('Produkt: ', product.name)}
                             {displayProductInfo('Id: ', product._id)}
                             {displayProductInfo('Styckpris: ', product.price + ' SEK')}
-                            {/* {displayProductInfo('Antal: ', product.count)} */}
+                            {displayProductInfo('Antal: ', product.amount)}
                         </li>
                     ))}
                 </ul>

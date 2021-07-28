@@ -12,11 +12,13 @@ import Dashboard from './components/dashboard/Dashboard';
 import AdminDashboard from './components/admin/adminDashboard/AdminDashboard';
 import AddCategory from './components/admin/addCategory/AddCategory';
 import AddProduct from './components/admin/addProduct/AddProduct';
+import ManageProducts from './components/admin/manageProducts/ManageProducts';
 import Product from './components/product/Product';
 import Cart from './components/cart/Cart';
 import Checkout from './components/checkout/Checkout';
 import Profile from './components/profile/Profile';
 import Orders from './components/admin/orders/Orders';
+import EditProduct from './components/admin/editProduct/EditProduct';
 import Page from './components/Page';
 
 import './App.css';
@@ -35,6 +37,10 @@ const App = () => (
         <AdminRoute exact path="/create/category" title="Ny kategori" component={AddCategory} />
 
         <AdminRoute exact path="/create/product" title="Ny produkt" component={AddProduct} />
+
+        <AdminRoute exact path="/update/product/:productId" title="Uppdatera produkt" component={EditProduct} />
+
+        <AdminRoute exact path="/admin/products" title="Produkter" component={ManageProducts} />
 
         <Route
           exact
@@ -71,11 +77,6 @@ const App = () => (
           path="/checkout"
           title="Kassa"
           component={Checkout}
-          // render={(props) => (
-          //   <Page title="Kassa">
-          //     <Checkout {...props} />
-          //   </Page>
-          // )}
         />
 
         <PrivateRoute

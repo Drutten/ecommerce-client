@@ -26,7 +26,7 @@ const OrderItem = ({item, enterEditMode, viewItem, background}) => {
 
             <div className="icons">
                 <span onClick={view}>{eye}</span>
-                <span onClick={()=> enterEditMode(item)}>{pen}</span> 
+                <span onClick={()=> enterEditMode(item)}>{pen}</span>
             </div>
         </li>
     )

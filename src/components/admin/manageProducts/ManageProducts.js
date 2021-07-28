@@ -3,24 +3,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 import AuthService from '../../../services/authService';
-import OrderService from '../../../services/orderService';
+import ProductService from '../../../services/productService';
 import DashboardCard from '../../dashboardCard/DashboardCard';
+import ListItem from '../../listItem/ListItem';
 import Layout from '../../layout/Layout';
-import OrderItem from '../orderItem/OrderItem';
-import OrderDetails from '../orderDetails/OrderDetails';
-import EditOrder from '../editOrder/EditOrder';
-import './Orders.css';
+import './ManageProducts.css';
 
 
-const Orders = () => {
+const ManageProducts = () => {
 
-    const [orders, setOrders] = useState([]);
-    const [statusOptions, setStatusOptions] = useState([]);
+    const [products, setProducts] = useState([]);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
-    const [editMode, setEditMode] = useState(false);
+    const [sort, setSort] = useState('createdAt');
+    const [order, setOrder] = useState('desc');
+    const [limit, setLimit] = useState('');
 
     const [menuItems] = useState([
         {id: 1, name: 'Ordrar', path: '/orders', icon: 'icon'},
@@ -30,18 +29,18 @@ const Orders = () => {
     ]);
 
     const authService = new AuthService();
-    const orderService = new OrderService();
+    const productService = new ProductService();
     const userId = authService.getLoggedInUser().user._id;
     const token = authService.getLoggedInUser().token;
     const spinner  =<FontAwesomeIcon icon={faSpinner}/>
 
 
 
-    const fetchOrders = async (userId, token) => {
+    const fetchProducts = async () => {
         setError('');
         setMessage('');
         setLoading(true);
-        const result = await orderService.getOrders(userId, token);
+        const result = await productService.getProducts(sort, order, limit);
         if (result.error) {
             setLoading(false);
             setError(result.error);
@@ -49,68 +48,40 @@ const Orders = () => {
         else {
             setLoading(false);
             if (result.length === 0) {
-                setMessage('Inga ordrar hittades');
+                setMessage('Inga produkter hittades');
             }
-            // console.log(result);
-            updateSelectedItem(result);
-            setOrders(result);
+            setProducts(result);
         }    
     }
 
 
-    const fetchStatusOptions = async () => {
-        const result = await orderService.getStatusOptions(userId, token);
-        if (result.error) {
-            console.log(result.error);
-        }
-        else {
-            setStatusOptions(result);
-        }
-    }
-
-
     useEffect(() => {
-        fetchOrders(userId, token);
-        fetchStatusOptions(userId, token);
+        fetchProducts();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 
-    const removeOrder = (item) => {
-        // BE
+    const removeProduct = async (productId) => {
+        console.log('remove!');
+        setError('');
+        const result = await productService.deleteProduct(productId, userId, token);
+        if (result.error) {
+            setError(result.error);
+        }
+        else {
+            fetchProducts();
+        }
     }
 
 
     const enterEditMode = (item = null) => {
-        const order = (selectedItem) ? selectedItem : item;
-        setSelectedItem(order);
-        setEditMode(true);
-    }
-
-
-    const viewOrder = (item) => {
-        setSelectedItem(item);    
-    }
-
-
-    const backToList = () => {
-        setSelectedItem(null);
+        const product = (selectedItem) ? selectedItem : item;
+        setSelectedItem(product);
     }
 
 
     const leaveEditMode = () => {
-        setEditMode(false);
-    }
-
-
-    const updateStatus = async (status, orderId) => {
-        const result = await orderService.updateOrderStatus(userId, token, orderId, status);
-        if (result.error) {
-            setError('Status kunde inte uppdateras');
-        }
-        else {
-            fetchOrders(userId, token);
-        }
+        setSelectedItem(null);
     }
 
 
@@ -153,45 +124,34 @@ const Orders = () => {
 
 
     return (
-        <Layout title="Ordrar" menuItems={menuItems}>
-            <DashboardCard title={(selectedItem) ? 'Order' : 'Ordrar'}>
+        <Layout title="Produkter" menuItems={menuItems}>
+            <DashboardCard title="Hantera produkter">
                 {displayError()}
                 {displayMessage()}
                 {displayLoading()}
                 { (!selectedItem) && <div>
-                    {orders.length > 0 ? (
-                        <ul className="order-list">
-                            {orders.map((item, i) => <OrderItem
+                    {products.length > 0 ? (
+                        <ul className="product-list">
+                            {products.map((item, i) => <ListItem
                                 key={item._id}
                                 item={item}
                                 enterEditMode={enterEditMode}
-                                viewItem={viewOrder}
+                                remove={removeProduct}
                                 background={setItemBackground(i)}
                             />)}
                         </ul>
                     ) : ''}
                 </div>}
 
-                { (selectedItem && !editMode) ? (
-                    <OrderDetails 
-                        item={selectedItem} 
-                        removeItem={removeOrder} 
-                        enterEditMode={enterEditMode}
-                        backToList={backToList} />
-                )
-                : ''
-                }
 
-                {(selectedItem && editMode) ? (
-                    <EditOrder
+                {/* {(selectedItem) ? (
+                    <EditProduct
                         item={selectedItem}
-                        statusOptions={statusOptions}
-                        updateStatus={updateStatus}
-                        removeItem={removeOrder}
+                        removeItem={removeProduct}
                         leaveEditMode={leaveEditMode} />
                 )
                 : ''
-                }
+                } */}
             
 
             </DashboardCard>
@@ -199,4 +159,4 @@ const Orders = () => {
     )
 }
 
-export default Orders;
+export default ManageProducts;

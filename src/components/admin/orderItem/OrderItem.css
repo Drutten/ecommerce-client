@@ -7,11 +7,15 @@
     padding: 10px 22px;
 }
 
+.order-item span {
+    word-break: break-all;   
+}
+
 .shadow {
     background-color: rgb(208, 221, 240);
 }
 
-.icons span {
+.order-item .icons span {
     display: inline-block;
     width: 60px;
     text-align: center;

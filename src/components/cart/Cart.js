@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import { StateContext } from '../../StateContext';
@@ -10,9 +10,6 @@ const Cart = () => {
 
     const [cartItems] = useContext(StateContext);
 
-    const [message, setMessage] = useState('');
-
-
     const getTotal = () => {
         let total = 0;
         cartItems.forEach((item) => {
@@ -21,22 +18,12 @@ const Cart = () => {
         return total;
     }
 
-    
-    const displayMessage = () => (
-        <div className={ (message) ? 'message' : 'not-displayed' }>
-            {message}
-        </div>
-    )
-
 
     return (
         
         <Layout 
             title="Varukorg"
         >
-            
-            {displayMessage()}
-
             <div className="sm-title">
                 <h1>Varukorg</h1>
             </div>

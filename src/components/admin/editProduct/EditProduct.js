@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom';
 import AuthService from '../../../services/authService';
 import Layout from '../../layout/Layout';
 import DashboardCard from '../../dashboardCard/DashboardCard';
-import './AddProduct.css';
 import ProductService from '../../../services/productService';
 import CategoryService from '../../../services/categoryService';
+import './EditProduct.css';
 
-const AddProduct = () => {
+const EditProduct = (props) => {
+
     const [formValues, setFormValues] = useState({
         name: '',
         description: '',
@@ -19,11 +20,12 @@ const AddProduct = () => {
         image: '',
     });
 
+    const [formData, setFormData] = useState('');
+
     const [currentStatus, setCurrentStatus] = useState({
         loading: false,
         error: '',
-        success: false,
-        redirect: false,
+        success: false
     });
 
     const [categories, setCategories] = useState([]);
@@ -39,7 +41,6 @@ const AddProduct = () => {
         loading,
         error,
         success,
-        // redirect
     } = currentStatus;
     
     
@@ -57,53 +58,65 @@ const AddProduct = () => {
     const user = (authService.getLoggedInUser()) ? authService.getLoggedInUser().user : null;
     const token = (authService.getLoggedInUser()) ? authService.getLoggedInUser().token : '';
 
+
+    const init = async (productId) => {
+        setCurrentStatus({...currentStatus, error: '', loading: true});
+        const result = await productService.getProduct(productId);
+        if (result.error) {
+            setCurrentStatus({...currentStatus, error: result.error, loading: false});
+        }
+        else {
+            setCurrentStatus({...currentStatus, loading: false});
+            setFormValues({
+                ...formValues,
+                name: result.name,
+                description: result.description,
+                price: result.price,
+                category: result.category._id,
+                shipping: result.shipping,
+                quantity: result.quantity
+            })
+            setFormData(new FormData());
+            fetchCategories();
+        }
+    }
+
+
+    const fetchCategories = async () => {
+        const result = await categoryService.getCategories();
+        if (result.error) {
+            setCurrentStatus({...currentStatus, error: result.error});
+        }
+        else {
+            setCategories(result);
+        }
+    }
     
 
-
     useEffect(() => {
-        const init = async () => {
-            const result = await categoryService.getCategories();
-            if (result.error) {
-                setCurrentStatus({...currentStatus, error: result.error});
-            }
-            else {
-                setCategories(result);
-            }
-        }
-        init();
+        init(props.match.params.productId);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        for (let i in formValues) {
-            formData.set(i, formValues[i]);
-        }
         setCurrentStatus({
             ...currentStatus,
             loading: true,  
             error: '', 
             success: false, 
         });
-        
-        const result = await productService.createProduct(user._id, token, formData);
+        const result = await productService.updateProduct(
+            props.match.params.productId, 
+            user._id, 
+            token, 
+            formData
+        );
         if (result.error) {
-            setCurrentStatus({...currentStatus, error: result.error, success: false, loading: false});
+            setCurrentStatus({...currentStatus, error: result.error, loading: false});
         }
         else {
-            setFormValues({
-                ...formValues, 
-                name: '',
-                description: '',
-                price: '',
-                category: '',
-                shipping: '',
-                quantity: '',
-                image: '',
-            });
-
             setCurrentStatus({
                 ...currentStatus,
                 loading: false,
@@ -116,6 +129,7 @@ const AddProduct = () => {
 
     const handleChange = (key) => (e) => {
         const value = (key === 'image') ? e.target.files[0] : e.target.value;
+        formData.set(key, value)
         setFormValues({...formValues, [key]: value});
     }
 
@@ -129,7 +143,7 @@ const AddProduct = () => {
 
     const displaySuccess = () => (
         <div className={ (success) ? 'success' : 'not-displayed' }>
-            Produkt har lagts till
+            Produkten har uppdaterats
         </div>
     );
 
@@ -218,15 +232,15 @@ const AddProduct = () => {
                 </select>
             </div>
 
-            <Link className="cancel-btn" to="/admin/dashboard">Avbryt</Link>
+            <Link className="cancel-btn" to="/admin/products">Avbryt</Link>
             <button type="submit" className="submit-btn">Spara</button>
         </form>
     );
 
 
     return (
-        <Layout title="Ny produkt" menuItems={menuItems}>
-            <DashboardCard title="Ny produkt">
+        <Layout title="Uppdatera produkt" menuItems={menuItems}>
+            <DashboardCard title={formValues.name}>
                 {displayLoading()}
                 {displayError()}
                 {displaySuccess()}
@@ -236,4 +250,4 @@ const AddProduct = () => {
     )
 }
 
-export default AddProduct;
+export default EditProduct;
