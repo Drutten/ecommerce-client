@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus, faNotEqual, faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus, faNotEqual } from '@fortawesome/free-solid-svg-icons';
+// import { faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 
 import { StateContext } from '../../StateContext';
@@ -22,7 +23,7 @@ const Product = (props) => {
 
     const cartPlus =<FontAwesomeIcon icon={faCartPlus}/>
     const notEqual =<FontAwesomeIcon icon={faNotEqual}/>
-    const solidHeart =<FontAwesomeIcon icon={fasHeart}/>
+    // const solidHeart =<FontAwesomeIcon icon={fasHeart}/>
     const regularHeart =<FontAwesomeIcon icon={farHeart}/>
     
 

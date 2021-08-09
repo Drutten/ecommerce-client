@@ -9,8 +9,6 @@ const Menu = (props) => {
 
   const {history, isOpenMenu, menuItems = [], categories = [], onFetchByCategory, onFetchAll} = props;
 
-  const icon = 'icon';
-
   const home =<FontAwesomeIcon icon={faHome}/>
   const tools =<FontAwesomeIcon icon={faTools}/>
   const bag =<FontAwesomeIcon icon={faShoppingBag}/>

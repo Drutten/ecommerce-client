@@ -14,7 +14,11 @@ const OrderDetails = ({item, removeItem, enterEditMode, backToList}) => {
 
 
 
-    const remove = () => {}
+    const remove = () => {
+        if (window.confirm('Ta bort order')) {
+            removeItem(item._id);
+        }
+    }
 
 
 
@@ -38,7 +42,7 @@ const OrderDetails = ({item, removeItem, enterEditMode, backToList}) => {
         <div className="order-info-buttons">
             <button onClick={backToList}>{back} Tillbaka</button>
             <button onClick={enterEditMode}>{pen} Ändra</button>
-            <button>{trash} Ta bort</button>
+            <button onClick={remove}>{trash} Ta bort</button>
         </div>    
     )
   

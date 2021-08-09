@@ -41,6 +41,7 @@ const History = ({user, token}) => {
 
     useEffect(() => {
         fetchPurchaseHistory(user._id, token);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 

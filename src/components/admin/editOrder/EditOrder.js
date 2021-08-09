@@ -5,13 +5,17 @@ import { faTrash, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 import './EditOrder.css';
 
-const EditOrder = ({item, statusOptions, updateStatus, removeItem, leaveEditMode}) => {
+const EditOrder = ({item, statusOptions, updateStatus, removeItem, backToList}) => {
     
     const trash  =<FontAwesomeIcon icon={faTrash} />
     const back  =<FontAwesomeIcon icon={faChevronLeft} />
 
 
-    const remove = () => {}
+    const remove = () => {
+        if (window.confirm('Ta bort order')) {
+            removeItem(item._id);
+        }
+    }
 
 
     const handleStatusChange = (e, orderId) => {
@@ -37,8 +41,8 @@ const EditOrder = ({item, statusOptions, updateStatus, removeItem, leaveEditMode
 
     const displayButtons = () => (
         <div className="order-info-buttons">
-            <button onClick={leaveEditMode}>{back} Tillbaka</button>
-            <button>{trash} Ta bort</button>
+            <button onClick={backToList}>{back} Tillbaka</button>
+            <button onClick={remove}>{trash} Ta bort</button>
         </div>    
     )
 
@@ -90,6 +94,7 @@ const EditOrder = ({item, statusOptions, updateStatus, removeItem, leaveEditMode
                             {displayProductInfo('Produkt: ', product.name)}
                             {displayProductInfo('Id: ', product._id)}
                             {displayProductInfo('Styckpris: ', product.price + ' SEK')}
+                            {displayProductInfo('Antal: ', product.amount)}
                         </li>
                     ))}
                 </ul>

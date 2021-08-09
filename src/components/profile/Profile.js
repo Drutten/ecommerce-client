@@ -49,6 +49,7 @@ const Profile = (props) => {
     
     useEffect(() => {
         fetchUser(userId);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 

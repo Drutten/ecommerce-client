@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import './ListItem.css';
 
 
-const ListItem = ({item, enterEditMode, remove, background}) => {
+const ListItem = ({item, remove, background}) => {
     
     const pen  =<FontAwesomeIcon icon={faPen} />
     const trash  =<FontAwesomeIcon icon={faTrash} />

@@ -64,4 +64,16 @@ export default class OrderService {
         });
         return await response.json();
     }
+
+
+    deleteOrder = async (orderId, userId, token) => {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/orders/${orderId}/${userId}`, {
+            method: 'DELETE',
+            headers: {
+                Accept: 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return await response.json();    
+    }
 }

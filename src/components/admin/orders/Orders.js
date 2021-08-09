@@ -76,8 +76,16 @@ const Orders = () => {
     }, []);
 
 
-    const removeOrder = (item) => {
-        // BE
+    const removeOrder = async (orderId) => {
+        setError('');
+        const result = await orderService.deleteOrder(orderId, userId, token);
+        if (result.error) {
+            setError(result.error);
+        }
+        else {
+            backToList();
+            fetchOrders(userId, token);
+        }
     }
 
 
@@ -95,10 +103,6 @@ const Orders = () => {
 
     const backToList = () => {
         setSelectedItem(null);
-    }
-
-
-    const leaveEditMode = () => {
         setEditMode(false);
     }
 
@@ -188,7 +192,7 @@ const Orders = () => {
                         statusOptions={statusOptions}
                         updateStatus={updateStatus}
                         removeItem={removeOrder}
-                        leaveEditMode={leaveEditMode} />
+                        backToList={backToList} />
                 )
                 : ''
                 }

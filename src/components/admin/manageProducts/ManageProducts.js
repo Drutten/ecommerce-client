@@ -16,10 +16,9 @@ const ManageProducts = () => {
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const [selectedItem, setSelectedItem] = useState(null);
-    const [sort, setSort] = useState('createdAt');
-    const [order, setOrder] = useState('desc');
-    const [limit, setLimit] = useState('');
+    const [sort] = useState('createdAt');
+    const [order] = useState('desc');
+    const [limit] = useState('');
 
     const [menuItems] = useState([
         {id: 1, name: 'Ordrar', path: '/orders', icon: 'icon'},
@@ -62,37 +61,17 @@ const ManageProducts = () => {
 
 
     const removeProduct = async (productId) => {
-        console.log('remove!');
-        setError('');
-        const result = await productService.deleteProduct(productId, userId, token);
-        if (result.error) {
-            setError(result.error);
+        if (window.confirm('Ta bort produkt')) {
+            setError('');
+            const result = await productService.deleteProduct(productId, userId, token);
+            if (result.error) {
+                setError(result.error);
+            }
+            else {
+                fetchProducts();
+            }
         }
-        else {
-            fetchProducts();
-        }
-    }
-
-
-    const enterEditMode = (item = null) => {
-        const product = (selectedItem) ? selectedItem : item;
-        setSelectedItem(product);
-    }
-
-
-    const leaveEditMode = () => {
-        setSelectedItem(null);
-    }
-
-
-    const updateSelectedItem = (list) => {
-        if (selectedItem) {
-            list.forEach(item => {
-                if (selectedItem._id === item._id) {
-                    setSelectedItem({...item});
-                }
-            });
-        }  
+        
     }
 
 
@@ -129,30 +108,18 @@ const ManageProducts = () => {
                 {displayError()}
                 {displayMessage()}
                 {displayLoading()}
-                { (!selectedItem) && <div>
+                <div>
                     {products.length > 0 ? (
                         <ul className="product-list">
                             {products.map((item, i) => <ListItem
                                 key={item._id}
                                 item={item}
-                                enterEditMode={enterEditMode}
                                 remove={removeProduct}
                                 background={setItemBackground(i)}
                             />)}
                         </ul>
                     ) : ''}
-                </div>}
-
-
-                {/* {(selectedItem) ? (
-                    <EditProduct
-                        item={selectedItem}
-                        removeItem={removeProduct}
-                        leaveEditMode={leaveEditMode} />
-                )
-                : ''
-                } */}
-            
+                </div>
 
             </DashboardCard>
         </Layout>
