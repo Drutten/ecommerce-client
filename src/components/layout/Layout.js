@@ -27,7 +27,8 @@ const Layout = ({
             </header>
             <div className="row">
                 <Menu 
-                    isOpenMenu={isOpenMenu} 
+                    isOpenMenu={isOpenMenu}
+                    setIsOpenMenu={setIsOpenMenu}
                     categories={categories} 
                     menuItems={menuItems} 
                     onFetchByCategory={onFetchByCategory}

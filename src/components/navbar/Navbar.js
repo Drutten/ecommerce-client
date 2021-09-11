@@ -21,7 +21,7 @@ const Navbar = (props) => {
 
     const history = useHistory();
 
-    const node = useRef();
+    const dropdownRef = useRef();
 
     const authService = new AuthService();
 
@@ -31,8 +31,8 @@ const Navbar = (props) => {
         setIsOpen(!isOpen);
     }
 
-    const handleClick = e => {
-        if (node.current.contains(e.target)) {
+    const handleClickOutside = e => {
+        if (dropdownRef?.current?.contains(e.target)) {
           // inside click
           return;
         }
@@ -42,10 +42,10 @@ const Navbar = (props) => {
 
     useEffect(() => {
         // add when mounted
-        document.addEventListener("mousedown", handleClick);
+        document.addEventListener("mousedown", handleClickOutside);
         // return function to be called when unmounted
         return () => {
-            document.removeEventListener("mousedown", handleClick);
+            document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
 
@@ -68,7 +68,7 @@ const Navbar = (props) => {
             </ul>
             <div className="user-icons">
             <div className="heart">{heart}</div>
-                <div className="dropdown" ref={node}>
+                <div className="dropdown" ref={dropdownRef}>
                     <div className="user" onClick={toggleDropdown}>{user}</div>
                     <div className={`dropdown-menu ${isOpen ? 'open' : ''}`}>
                         <ul>

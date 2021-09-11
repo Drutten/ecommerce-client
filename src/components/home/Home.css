@@ -1,6 +1,5 @@
 .product-wrapper {
     position: relative;
-    margin-top: 20px;
     display: flex;
     justify-content: center;
     flex-flow: row wrap;
@@ -9,8 +8,7 @@
 .controls {
     display: flex;
     flex-direction: column;
-    padding: 0.65em;
-    background-color: rgb(106, 105, 107);
+    padding: 20px 20px 0;
 }
 
 .controls .control-buttons {
@@ -45,7 +43,7 @@
 }
 
 .controls form button {
-    margin-right: 4px 4px 4px 0;
+    margin: 4px 4px 4px 0;
     height: 34px;
 }
 
@@ -78,17 +76,17 @@
     }
 
     .controls .control-buttons button {
-        width: auto;
-        margin: 0 4px;
+        width: 110px;
+        margin: 0 8px;
     }
 
     .controls form input {
         width: auto;
-        margin: 0 0 0 4px;
+        margin: 0 0 0 8px;
     }
 
     .controls form button {
-        margin: 0;  
+        margin: 0;
     }
 }
 

@@ -45,7 +45,7 @@
         left: 40px;
     }
 
-    .hamburger > div{
+    .hamburger > div {
         width: 35px;
         height: 5px;
         margin: 6px 0;
@@ -64,6 +64,10 @@
      
 @media(min-width: 1000px){
     .hamburger {
+        display: none;
+    }
+
+    .hamburger > div {
         display: none;
     }
 }
