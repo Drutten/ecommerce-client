@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus, faNotEqual } from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus, faNotEqual, faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons';
 // import { faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 
@@ -25,6 +26,7 @@ const Product = (props) => {
     const notEqual =<FontAwesomeIcon icon={faNotEqual}/>
     // const solidHeart =<FontAwesomeIcon icon={fasHeart}/>
     const regularHeart =<FontAwesomeIcon icon={farHeart}/>
+    const chevronCircleLeft =<FontAwesomeIcon icon={faChevronCircleLeft}/>
     
 
     useEffect(() => {
@@ -91,6 +93,18 @@ const Product = (props) => {
     const toggleDescription = () => {
         setIsFullDescription(!isFullDescription);
     }
+
+
+
+    const isSoldOut = () => {
+        return product.quantity < 1;
+    }
+
+
+
+    const getNotDisplayedClass = () => {
+        return (isSoldOut()) ? 'not-displayed' : '';
+    }
     
 
 
@@ -150,6 +164,7 @@ const Product = (props) => {
             {product && 
                 <div>
                     <div className="product-container">
+                    <Link to='/' className="back-button">{chevronCircleLeft}</Link>
                         <div className="image-container">
                             <div className="image">
                                 <ProductImage product={product} url="products"/>
@@ -162,14 +177,15 @@ const Product = (props) => {
                                     <span>{product.category.name}</span>
                                 </div>
                                 <div className="info-details">
-                                    <span className={getQuantityClass()}>{product.quantity} i lager</span>
+                                    {(isSoldOut()) ? (<span className={getQuantityClass()}>Slut</span>)
+                                    : (<span className={getQuantityClass()}>{product.quantity} i lager</span>)}
                                     <span><b>{product.price}</b> SEK</span>
                                 </div>
                                 <div className="info-buttons">
 
 
                                 {(!isInCart()) ? <button 
-                                    className="add-button" 
+                                    className={`add-button ${getNotDisplayedClass()}`}
                                     title="Lägg i varukorgen" 
                                     onClick={addToCart}>
                                         <span>{cartPlus}</span><span>Köp</span>

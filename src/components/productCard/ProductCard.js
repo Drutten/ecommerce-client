@@ -52,6 +52,21 @@ const ProductCard = ({product}) => {
         return false;
     }
 
+
+    const isSoldOut = () => {
+        return product.quantity < 1;
+    }
+
+
+    const getHiddenClass = () => {
+        return (isSoldOut()) ? 'hidden' : '';
+    }
+
+
+    const getQuantityClass = () => {
+        return (product.quantity < 10) ? 'danger' : ''
+    }
+
     
     return (
         
@@ -71,10 +86,11 @@ const ProductCard = ({product}) => {
 
                         <div className="product-card-info">
                             <span><b>{product.price}</b> SEK</span>
-                            <span>{product.quantity} i lager</span>
+                            {(isSoldOut()) ? (<span className={getQuantityClass()}>Slut</span>)
+                            : (<span className={getQuantityClass()}>{product.quantity} i lager</span>) }
                             <div className="card-button">
                                 {(!isInCart()) ? <button 
-                                    className="card-btn" 
+                                    className={`${getHiddenClass()}`}
                                     title="Lägg i varukorgen"
                                     onClick={addToCart}>
                                         <span>{cartPlus}</span>
@@ -95,7 +111,7 @@ const ProductCard = ({product}) => {
             </div>
 
             
-            {(product.quantity < 10) ? (<span className="warning">Få kvar</span>) 
+            {(product.quantity < 10 && !isSoldOut()) ? (<span className="warning">Få kvar</span>)
             : (<span></span>)}
             <span className="heart">{regularHeart}</span>
             {/* <span>{solidHeart}</span> */}

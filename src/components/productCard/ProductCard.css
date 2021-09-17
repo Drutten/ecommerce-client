@@ -93,6 +93,14 @@
     right: 4px;
 }
 
+button.hidden {
+    visibility: hidden;
+}
+
+.danger {
+    color: rgb(255, 0, 0);
+}
+
 @media (min-width: 500px) {
     .product-card {
         width: 220px;
