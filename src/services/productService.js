@@ -20,6 +20,22 @@ export default class ProductService {
 
 
 
+    /**Param Array of ids*/
+    getProductsByIds = async (ids = []) => {
+        const data = {ids}
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/filterids`, {
+            method: "POST",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        return await response.json();   
+    }
+
+
+
     getProductsByCategory = async (sort, category) => {
         const data = {
             sort: sort,

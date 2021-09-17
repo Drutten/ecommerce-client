@@ -9,6 +9,7 @@ import Layout from '../layout/Layout';
 import BraintreeService from '../../services/braintreeService';
 import AuthService from '../../services/authService';
 import OrderService from '../../services/orderService';
+import ProductService from '../../services/productService';
 import './Checkout.css';
 
 const Checkout = () => {
@@ -25,6 +26,8 @@ const Checkout = () => {
     const authService = new AuthService();
     const braintreeService = new BraintreeService();
     const orderService = new OrderService();
+    const productService = new ProductService();
+
     const userId = (authService.isAuthenticated()) ? authService.getLoggedInUser().user._id : '';
     const token = (authService.isAuthenticated()) ? authService.getLoggedInUser().token : '';
     const spinner  =<FontAwesomeIcon icon={faSpinner}/>
@@ -52,8 +55,59 @@ const Checkout = () => {
     }
 
 
+    const getListOfIds = () => {
+        const ids = [];
+        cartItems.forEach((item) => {
+            ids.push(item._id);
+        });
+        return ids;
+    }
 
-    const pay = () => {
+
+    
+    const isEnoughQuantity = (item) => {
+        let enough = true;
+        cartItems.forEach((cItem) => {
+            if (cItem._id === item._id) {
+                console.log(item.quantity, cItem.amount)
+                console.log(item.quantity - cItem.amount);
+                if ((item.quantity - cItem.amount) < 0) {
+                    enough = false;
+                }
+            }
+        });
+        return enough;
+    }
+
+
+
+    const pay = async () => {
+        const ids = getListOfIds();
+        setError('');
+        const result = await productService.getProductsByIds(ids);
+        if (result.error || result.length !== cartItems.length) {
+            setError('Produkter kunde inte hämtas');
+        }
+        else {
+            let enoughQuantity = true;
+            for (let i = 0; i < result.length; i++) {
+                enoughQuantity = isEnoughQuantity(result[i]);
+                if (!enoughQuantity) {
+                    break;
+                }  
+            }
+            if (!enoughQuantity) {
+                setError('Ej tillräckligt i lager');   
+            }
+            else {
+                processPayment();
+            }
+        }
+    }
+
+
+
+    const processPayment = () => {
         // send nonce to BE
         setLoading(true);
         setError('');
@@ -169,11 +223,13 @@ const Checkout = () => {
     )
 
 
+    
     const displayError = () => (
         <div className={ (error) ? 'error' : 'not-displayed' }>
             { error }
         </div>
     )
+
 
 
     const displayLoading = () => (
@@ -185,11 +241,9 @@ const Checkout = () => {
 
 
     return (
-        
         <Layout 
             title="Kassa"
         >
-            
             {displayMessage()}
             {displayError()}
 
@@ -216,9 +270,7 @@ const Checkout = () => {
                 <div className="payment">
                     {displayDropIn()}
                 </div>
-            </div>}
-            
-            
+            </div>}   
         </Layout>
     )
 }
