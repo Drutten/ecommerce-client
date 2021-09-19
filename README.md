@@ -1,4 +1,21 @@
-# Getting Started with Create React App
+# Ecommerce-client
+
+## Description
+
+This project is a React application which I created to use [E-commerce API](https://github.com/Drutten/ecommerce).
+
+This project is created in educational purpose.
+
+
+## Technologies
+
+The project was created with
+- React version: 17.0.2
+- React-router-dom version: 5.2.0
+
+
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
