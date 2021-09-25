@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import AuthService from '../../../services/authService';
 import Layout from '../../layout/Layout';
-import DashboardCard from '../../dashboardCard/DashboardCard';
+import Card from '../../card/Card';
 import './AddProduct.css';
 import ProductService from '../../../services/productService';
 import CategoryService from '../../../services/categoryService';
@@ -23,7 +23,6 @@ const AddProduct = () => {
         loading: false,
         error: '',
         success: false,
-        redirect: false,
     });
 
     const [categories, setCategories] = useState([]);
@@ -39,15 +38,14 @@ const AddProduct = () => {
         loading,
         error,
         success,
-        // redirect
     } = currentStatus;
     
     
     const menuItems = [
-        {id: 1, name: 'Ordrar', path: '/orders', icon: 'icon'},
-        {id: 2, name: 'Ny kategori', path: '/create/category', icon: 'icon'},
-        {id: 3, name: 'Ny produkt', path: '/create/product', icon: 'icon'},
-        {id: 4, name: 'Produkter', path: '/admin/products', icon: 'icon'}
+        {id: 1, name: 'Ordrar', path: '/orders'},
+        {id: 2, name: 'Ny kategori', path: '/create/category'},
+        {id: 3, name: 'Ny produkt', path: '/create/product'},
+        {id: 4, name: 'Produkter', path: '/admin/products'}
     ];
 
     const authService = new AuthService();
@@ -57,7 +55,12 @@ const AddProduct = () => {
     const user = (authService.getLoggedInUser()) ? authService.getLoggedInUser().user : null;
     const token = (authService.getLoggedInUser()) ? authService.getLoggedInUser().token : '';
 
-    
+
+
+    useEffect(() => {
+        document.title = 'Ny produkt';
+    }, []);
+
 
 
     useEffect(() => {
@@ -73,6 +76,7 @@ const AddProduct = () => {
         init();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
 
 
     const handleSubmit = async (e) => {
@@ -114,10 +118,12 @@ const AddProduct = () => {
     }
 
 
+
     const handleChange = (key) => (e) => {
         const value = (key === 'image') ? e.target.files[0] : e.target.value;
         setFormValues({...formValues, [key]: value});
     }
+
 
 
     const displayError = () => (
@@ -127,6 +133,7 @@ const AddProduct = () => {
     )
 
 
+
     const displaySuccess = () => (
         <div className={ (success) ? 'success' : 'not-displayed' }>
             Produkt har lagts till
@@ -134,11 +141,13 @@ const AddProduct = () => {
     );
 
 
+
     const displayLoading = () => (
         <div className={ (loading) ? 'spinner' : 'not-displayed' }>
             Laddar...
         </div>
     );
+
 
 
     const productForm = () => (
@@ -224,14 +233,15 @@ const AddProduct = () => {
     );
 
 
+
     return (
         <Layout title="Ny produkt" menuItems={menuItems}>
-            <DashboardCard title="Ny produkt">
+            <Card title="Ny produkt">
                 {displayLoading()}
                 {displayError()}
                 {displaySuccess()}
                 {productForm()}  
-            </DashboardCard>
+            </Card>
         </Layout>
     )
 }

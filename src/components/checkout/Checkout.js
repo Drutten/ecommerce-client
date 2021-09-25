@@ -33,6 +33,13 @@ const Checkout = () => {
     const spinner  =<FontAwesomeIcon icon={faSpinner}/>
 
 
+
+    useEffect(() => {
+        document.title = 'Kassan';
+    }, []);
+
+
+
     useEffect(() => {
         if (authService.isAuthenticated()) {
             fetchBraintreeToken(userId, token);
@@ -53,6 +60,7 @@ const Checkout = () => {
             setBraintreeToken(result);
         }
     }
+
 
 
     const getListOfIds = () => {
@@ -150,6 +158,7 @@ const Checkout = () => {
             setError(error.message);
         })
     }
+
 
 
     const handleAddress = (e) => {

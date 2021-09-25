@@ -8,103 +8,73 @@ import Home from './components/home/Home';
 import Signup from './user/Signup';
 import Signin from './user/Signin';
 import Navbar from './components/navbar/Navbar';
-import Dashboard from './components/dashboard/Dashboard';
-import AdminDashboard from './components/admin/adminDashboard/AdminDashboard';
+import Profile from './components/profile/Profile';
+import Admin from './components/admin/Admin';
 import AddCategory from './components/admin/addCategory/AddCategory';
 import AddProduct from './components/admin/addProduct/AddProduct';
 import ManageProducts from './components/admin/manageProducts/ManageProducts';
 import Product from './components/product/Product';
 import Cart from './components/cart/Cart';
 import Checkout from './components/checkout/Checkout';
-import Profile from './components/profile/Profile';
+import EditProfile from './components/editProfile/EditProfile';
 import Orders from './components/admin/orders/Orders';
 import EditProduct from './components/admin/editProduct/EditProduct';
-import Page from './components/Page';
 
 import './App.css';
 
 const App = () => (
+
   <div>
     <StateProvider>
       <Navbar />
       <Switch>
-        <PrivateRoute exact path="/dashboard" title="Kontrollpanel" component={Dashboard} />
 
-        <AdminRoute exact path="/admin/dashboard" title="Administratör" component={AdminDashboard} />
+        <PrivateRoute exact path="/profile">
+          <Profile />
+        </PrivateRoute>
 
-        <AdminRoute exact path="/orders" title="Ordrar" component={Orders} />
+        <AdminRoute exact path="/orders">
+          <Orders />
+        </AdminRoute>
 
-        <AdminRoute exact path="/create/category" title="Ny kategori" component={AddCategory} />
+        <AdminRoute exact path="/create/category">
+          <AddCategory />
+        </AdminRoute>
 
-        <AdminRoute exact path="/create/product" title="Ny produkt" component={AddProduct} />
+        <AdminRoute exact path="/create/product">
+          <AddProduct />
+        </AdminRoute>
 
-        <AdminRoute exact path="/update/product/:productId" title="Uppdatera produkt" component={EditProduct} />
+        <AdminRoute exact path="/update/product/:productId">
+          <EditProduct />
+        </AdminRoute>
 
-        <AdminRoute exact path="/admin/products" title="Produkter" component={ManageProducts} />
+        <AdminRoute exact path="/admin/products">
+          <ManageProducts />
+        </AdminRoute>
 
-        <Route
-          exact
-          path="/signup"
-          render={(props) => (
-            <Page title="Ny kund">
-              <Signup {...props} />
-            </Page>
-          )}
-        />
+        <AdminRoute exact path="/admin">
+          <Admin />
+        </AdminRoute>
 
-        <Route
-          exact
-          path="/signin"
-          render={(props) => (
-            <Page title="Logga in">
-              <Signin {...props} />
-            </Page>
-          )}
-        />
+        <Route exact path="/signup"><Signup /></Route>
 
-        <Route
-          exact
-          path="/cart"
-          render={(props) => (
-            <Page title="Varukorg">
-              <Cart {...props} />
-            </Page>
-          )}
-        />
+        <Route exact path="/signin"><Signin /></Route>
 
-        <PrivateRoute
-          exact
-          path="/checkout"
-          title="Kassa"
-          component={Checkout}
-        />
+        <Route exact path="/cart"><Cart /></Route>
 
-        <PrivateRoute
-          exact
-          path="/profile/:userId"
-          title="Profil"
-          component={Profile}
-        />
+        <PrivateRoute exact path="/checkout">
+          <Checkout />
+        </PrivateRoute>
 
-        <Route
-          exact
-          path="/products/:productId"
-          render={(props) => (
-            <Page title="Start">
-              <Product {...props} />
-            </Page>
-          )}
-        />
+        <PrivateRoute exact path="/edit-profile/:userId" >
+          <EditProfile />
+        </PrivateRoute>
+        
+        <Route exact path="/products/:productId"><Product /></Route>
 
-        <Route
-          exact
-          path="/"
-          render={(props) => (
-            <Page title="Start">
-              <Home {...props} />
-            </Page>
-          )}
-        />
+        <Route exact path="/"><Home /></Route>
+
       </Switch>
     </StateProvider>
   </div>

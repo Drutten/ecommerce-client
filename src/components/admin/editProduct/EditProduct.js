@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import AuthService from '../../../services/authService';
 import Layout from '../../layout/Layout';
-import DashboardCard from '../../dashboardCard/DashboardCard';
+import Card from '../../card/Card';
 import ProductService from '../../../services/productService';
 import CategoryService from '../../../services/categoryService';
 import './EditProduct.css';
 
-const EditProduct = (props) => {
+const EditProduct = () => {
 
     const [formValues, setFormValues] = useState({
         name: '',
@@ -45,18 +45,33 @@ const EditProduct = (props) => {
     
     
     const menuItems = [
-        {id: 1, name: 'Ordrar', path: '/orders', icon: 'icon'},
-        {id: 2, name: 'Ny kategori', path: '/create/category', icon: 'icon'},
-        {id: 3, name: 'Ny produkt', path: '/create/product', icon: 'icon'},
-        {id: 4, name: 'Produkter', path: '/admin/products', icon: 'icon'}
+        {id: 1, name: 'Ordrar', path: '/orders'},
+        {id: 2, name: 'Ny kategori', path: '/create/category'},
+        {id: 3, name: 'Ny produkt', path: '/create/product'},
+        {id: 4, name: 'Produkter', path: '/admin/products'}
     ];
 
     const authService = new AuthService();
     const productService = new ProductService();
     const categoryService = new CategoryService();
 
+    const { productId } = useParams();
     const user = (authService.getLoggedInUser()) ? authService.getLoggedInUser().user : null;
     const token = (authService.getLoggedInUser()) ? authService.getLoggedInUser().token : '';
+
+
+
+    useEffect(() => {
+        document.title = 'Redigera produkt';
+    }, []);
+
+
+
+    useEffect(() => {
+        init(productId);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
 
 
     const init = async (productId) => {
@@ -82,6 +97,7 @@ const EditProduct = (props) => {
     }
 
 
+
     const fetchCategories = async () => {
         const result = await categoryService.getCategories();
         if (result.error) {
@@ -91,12 +107,7 @@ const EditProduct = (props) => {
             setCategories(result);
         }
     }
-    
 
-    useEffect(() => {
-        init(props.match.params.productId);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
 
     const handleSubmit = async (e) => {
@@ -108,9 +119,9 @@ const EditProduct = (props) => {
             success: false, 
         });
         const result = await productService.updateProduct(
-            props.match.params.productId, 
-            user._id, 
-            token, 
+            productId,
+            user._id,
+            token,
             formData
         );
         if (result.error) {
@@ -127,11 +138,13 @@ const EditProduct = (props) => {
     }
 
 
+
     const handleChange = (key) => (e) => {
         const value = (key === 'image') ? e.target.files[0] : e.target.value;
         formData.set(key, value)
         setFormValues({...formValues, [key]: value});
     }
+
 
 
     const displayError = () => (
@@ -141,6 +154,7 @@ const EditProduct = (props) => {
     )
 
 
+
     const displaySuccess = () => (
         <div className={ (success) ? 'success' : 'not-displayed' }>
             Produkten har uppdaterats
@@ -148,11 +162,13 @@ const EditProduct = (props) => {
     );
 
 
+
     const displayLoading = () => (
         <div className={ (loading) ? 'spinner' : 'not-displayed' }>
             Laddar...
         </div>
     );
+
 
 
     const productForm = () => (
@@ -238,14 +254,15 @@ const EditProduct = (props) => {
     );
 
 
+
     return (
-        <Layout title="Uppdatera produkt" menuItems={menuItems}>
-            <DashboardCard title={formValues.name}>
+        <Layout title="Redigera produkt" menuItems={menuItems}>
+            <Card title={formValues.name}>
                 {displayLoading()}
                 {displayError()}
                 {displaySuccess()}
                 {productForm()}  
-            </DashboardCard>
+            </Card>
         </Layout>
     )
 }

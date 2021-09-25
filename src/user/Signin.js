@@ -1,5 +1,5 @@
 import { Link, Redirect } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import AuthService from '../services/authService';
 import './Signin.css';
@@ -18,6 +18,14 @@ const Signin = () => {
 
     const authService = new AuthService();
 
+
+
+    useEffect(() => {
+        document.title = 'Logga in';
+    }, []);
+
+
+
     const handleChange = (value, e) => {
         setFormValues({
             ...formValues,
@@ -25,6 +33,8 @@ const Signin = () => {
             [value]: e.target.value
         });
     }
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -52,11 +62,15 @@ const Signin = () => {
         }
     }
 
+
+
     const displayError = () => (
         <div className={ error ? 'error' : 'not-displayed' }>
             { error }
         </div>
     )
+
+
 
     const displayLoading = () => (
         <div className={ loading ? 'spinner' : 'not-displayed' }>
@@ -64,12 +78,14 @@ const Signin = () => {
         </div>
     )
 
+
+
     const redirectUser = () => {
         if (redirect) {
             const user = authService.getLoggedInUser().user;
             if (user && user.role === 1) {
                 return (
-                    <Redirect to="/admin/dashboard"/>
+                    <Redirect to="/admin"/>
                 )
             }
             return (
@@ -80,6 +96,7 @@ const Signin = () => {
             return <Redirect to="/"/>
         }
     }
+
 
 
     const signinForm = () => (
@@ -109,6 +126,9 @@ const Signin = () => {
             <p>Ny kund? <Link to="/signup">Registrera dig nu</Link></p>
         </form>
     )
+
+
+
     return (
         <div>
             <header>

@@ -1,13 +1,13 @@
-import './DashboardCard.css';
+import './Card.css';
 
-const DashboardCard = ({
+const Card = ({
     title = 'Rubrik',
     children
 }) => {
 
     
     return (
-        <div className="dashboard-card">
+        <div className="card">
             <header>
                 <h3>{title}</h3>
             </header>
@@ -17,4 +17,4 @@ const DashboardCard = ({
     )
 }
 
-export default DashboardCard;
+export default Card;

@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-import AuthService from '../../../services/authService';
-import DashboardCard from '../../dashboardCard/DashboardCard';
-import Layout from '../../layout/Layout';
-import History from '../../history/History';
-import './AdminDashboard.css';
+import AuthService from '../../services/authService';
+import Card from '../card/Card';
+import Layout from '../layout/Layout';
+import History from '../history/History';
+import './Admin.css';
 
-const AdminDashboard = () => {
+const Admin = () => {
 
     const authService = new AuthService();
 
@@ -14,16 +14,23 @@ const AdminDashboard = () => {
     const token = authService.getLoggedInUser().token;
 
     const [menuItems] = useState([
-        {id: 1, name: 'Ordrar', path: '/orders', icon: 'icon'},
-        {id: 2, name: 'Ny kategori', path: '/create/category', icon: 'icon'},
-        {id: 3, name: 'Ny produkt', path: '/create/product', icon: 'icon'},
-        {id: 4, name: 'Produkter', path: '/admin/products', icon: 'icon'}
+        {id: 1, name: 'Ordrar', path: '/orders'},
+        {id: 2, name: 'Ny kategori', path: '/create/category'},
+        {id: 3, name: 'Ny produkt', path: '/create/product'},
+        {id: 4, name: 'Produkter', path: '/admin/products'}
     ]);
+
+
+
+    useEffect(() => {
+        document.title = 'Administratör';
+    }, []);
+
 
 
     return (
         <Layout title="Administratör" menuItems={menuItems}>
-            <DashboardCard title="Profil">
+            <Card title="Profil">
                 {user ? (
                     <ul className="profile-list">
                         <li className="profile-list-item"><span>Namn:</span><span className="value">{user.name}</span></li>
@@ -32,13 +39,13 @@ const AdminDashboard = () => {
                     </ul>
                 ) : ''
             }
-            </DashboardCard>
+            </Card>
 
-            <DashboardCard title="Historik">
+            <Card title="Historik">
                 <History user={user} token={token} />
-            </DashboardCard>
+            </Card>
         </Layout>
     )
 }
 
-export default AdminDashboard;
+export default Admin;

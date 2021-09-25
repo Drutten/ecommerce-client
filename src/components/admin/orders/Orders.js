@@ -4,7 +4,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 import AuthService from '../../../services/authService';
 import OrderService from '../../../services/orderService';
-import DashboardCard from '../../dashboardCard/DashboardCard';
+import Card from '../../card/Card';
 import Layout from '../../layout/Layout';
 import OrderItem from '../orderItem/OrderItem';
 import OrderDetails from '../orderDetails/OrderDetails';
@@ -23,10 +23,10 @@ const Orders = () => {
     const [editMode, setEditMode] = useState(false);
 
     const [menuItems] = useState([
-        {id: 1, name: 'Ordrar', path: '/orders', icon: 'icon'},
-        {id: 2, name: 'Ny kategori', path: '/create/category', icon: 'icon'},
-        {id: 3, name: 'Ny produkt', path: '/create/product', icon: 'icon'},
-        {id: 4, name: 'Produkter', path: '/admin/products', icon: 'icon'}
+        {id: 1, name: 'Ordrar', path: '/orders'},
+        {id: 2, name: 'Ny kategori', path: '/create/category'},
+        {id: 3, name: 'Ny produkt', path: '/create/product'},
+        {id: 4, name: 'Produkter', path: '/admin/products'}
     ]);
 
     const authService = new AuthService();
@@ -34,6 +34,20 @@ const Orders = () => {
     const userId = authService.getLoggedInUser().user._id;
     const token = authService.getLoggedInUser().token;
     const spinner  =<FontAwesomeIcon icon={faSpinner}/>
+
+
+
+    useEffect(() => {
+        fetchOrders(userId, token);
+        fetchStatusOptions(userId, token);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+
+
+    useEffect(() => {
+        document.title = 'Ordrar';
+    }, []);
 
 
 
@@ -58,6 +72,7 @@ const Orders = () => {
     }
 
 
+
     const fetchStatusOptions = async () => {
         const result = await orderService.getStatusOptions(userId, token);
         if (result.error) {
@@ -68,12 +83,6 @@ const Orders = () => {
         }
     }
 
-
-    useEffect(() => {
-        fetchOrders(userId, token);
-        fetchStatusOptions(userId, token);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
 
     const removeOrder = async (orderId) => {
@@ -89,6 +98,7 @@ const Orders = () => {
     }
 
 
+
     const enterEditMode = (item = null) => {
         const order = (selectedItem) ? selectedItem : item;
         setSelectedItem(order);
@@ -96,15 +106,18 @@ const Orders = () => {
     }
 
 
+
     const viewOrder = (item) => {
         setSelectedItem(item);    
     }
+
 
 
     const backToList = () => {
         setSelectedItem(null);
         setEditMode(false);
     }
+
 
 
     const updateStatus = async (status, orderId) => {
@@ -118,6 +131,7 @@ const Orders = () => {
     }
 
 
+
     const updateSelectedItem = (list) => {
         if (selectedItem) {
             list.forEach(item => {
@@ -129,11 +143,13 @@ const Orders = () => {
     }
 
 
+
     const displayError = () => (
         <div className={ (error) ? 'error' : 'not-displayed' }>
             { error }
         </div>
     )
+
 
 
     const displayMessage = () => (
@@ -143,11 +159,13 @@ const Orders = () => {
     )
 
 
+
     const displayLoading = () => (
         <div className={ (loading) ? 'spinner' : 'not-displayed' }>
             {spinner}
         </div>
     );
+
 
 
     const setItemBackground = (index) => {
@@ -158,7 +176,7 @@ const Orders = () => {
 
     return (
         <Layout title="Ordrar" menuItems={menuItems}>
-            <DashboardCard title={(selectedItem) ? 'Order' : 'Ordrar'}>
+            <Card title={(selectedItem) ? 'Order' : 'Ordrar'}>
                 {displayError()}
                 {displayMessage()}
                 {displayLoading()}
@@ -198,7 +216,7 @@ const Orders = () => {
                 }
             
 
-            </DashboardCard>
+            </Card>
         </Layout>
     )
 }

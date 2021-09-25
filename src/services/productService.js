@@ -79,7 +79,7 @@ export default class ProductService {
 
 
     updateProduct = async (productId, userId, token, product) => {
-        console.log(product);
+        // console.log(product); // FormData
         const response = await fetch(`${process.env.REACT_APP_API_URL}/products/${productId}/${userId}`, {
             method: 'PUT',
             headers: {

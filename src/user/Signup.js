@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import AuthService from '../services/authService';
 import './Signup.css';
@@ -18,6 +18,14 @@ const Signup = () => {
 
     const authService = new AuthService();
 
+
+
+    useEffect(() => {
+        document.title = 'Ny kund';
+    }, []);
+
+
+
     const handleChange = (value, e) => {
         setFormValues({
             ...formValues,
@@ -25,6 +33,8 @@ const Signup = () => {
             [value]: e.target.value
         });
     }
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -54,17 +64,22 @@ const Signup = () => {
         }
     }
 
+
+
     const displayError = () => (
         <div className={ error ? 'error' : 'not-displayed' }>
             { error }
         </div>
     )
 
+
+
     const displaySuccess = () => (
         <div className={ success ? 'success' : 'not-displayed' }>
             Nytt konto har skapats
         </div>
     )
+
 
 
     const signupForm = () => (
@@ -105,6 +120,8 @@ const Signup = () => {
         </form>
     )
     
+
+
     return (
         <div>
             <header>

@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus, faNotEqual, faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons';
 // import { faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
@@ -11,7 +11,7 @@ import Layout from '../layout/Layout';
 import ProductImage from '../productImage/ProductImage';
 import './Product.css';
 
-const Product = (props) => {
+const Product = () => {
 
     const [cartItems, updateCart] = useContext(StateContext);
 
@@ -20,14 +20,15 @@ const Product = (props) => {
     const [error, setError] = useState('');
     const [isFullDescription, setIsFullDescription] = useState(false);
     // const [message, setMessage] = useState('');
-    const productId = props.match.params.productId;
+    const { productId } = useParams();
 
     const cartPlus =<FontAwesomeIcon icon={faCartPlus}/>
     const notEqual =<FontAwesomeIcon icon={faNotEqual}/>
     // const solidHeart =<FontAwesomeIcon icon={fasHeart}/>
     const regularHeart =<FontAwesomeIcon icon={farHeart}/>
     const chevronCircleLeft =<FontAwesomeIcon icon={faChevronCircleLeft}/>
-    
+
+
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -41,6 +42,7 @@ const Product = (props) => {
             else {
                 setProduct(result);
                 setLoading(false);
+                document.title = result.name;
             }
         }
         fetchProduct();    
@@ -56,6 +58,7 @@ const Product = (props) => {
     }
 
 
+
     const removeFromCart = () => {
         const index = getIndex(product._id);
         if (index !== -1) {
@@ -66,6 +69,7 @@ const Product = (props) => {
     }
 
 
+
     const getIndex = (id) => {
         let index = -1;
         cartItems.forEach((item, i) => {
@@ -73,6 +77,7 @@ const Product = (props) => {
         });
         return index;
     }
+
 
 
     const isInCart = () => {
@@ -139,6 +144,7 @@ const Product = (props) => {
             { error }
         </div>
     )
+
 
 
     // const displayMessage = () => (

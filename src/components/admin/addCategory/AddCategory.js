@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import AuthService from '../../../services/authService';
 import Layout from '../../layout/Layout';
-import DashboardCard from '../../dashboardCard/DashboardCard';
+import Card from '../../card/Card';
 import './AddCategory.css';
 import CategoryService from '../../../services/categoryService';
 
@@ -13,10 +13,10 @@ const AddCategory = () => {
     const [success, setSuccess] = useState(false);
     
     const menuItems = [
-        {id: 1, name: 'Ordrar', path: '/orders', icon: 'icon'},
-        {id: 2, name: 'Ny kategori', path: '/create/category', icon: 'icon'},
-        {id: 3, name: 'Ny produkt', path: '/create/product', icon: 'icon'},
-        {id: 4, name: 'Produkter', path: '/admin/products', icon: 'icon'}
+        {id: 1, name: 'Ordrar', path: '/orders'},
+        {id: 2, name: 'Ny kategori', path: '/create/category'},
+        {id: 3, name: 'Ny produkt', path: '/create/product'},
+        {id: 4, name: 'Produkter', path: '/admin/products'}
     ];
 
     const authService = new AuthService();
@@ -24,6 +24,14 @@ const AddCategory = () => {
 
     const user = (authService.getLoggedInUser()) ? authService.getLoggedInUser().user : null;
     const token = (authService.getLoggedInUser()) ? authService.getLoggedInUser().token : '';
+
+
+
+    useEffect(() => {
+        document.title = 'Ny kategori';
+    }, []);
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -41,10 +49,14 @@ const AddCategory = () => {
         }
     }
 
+
+
     const handleChange = (e) => {
         setError('');
         setName(e.target.value);
     }
+
+
 
     const displayError = () => (
         <div className={ error ? 'error' : 'not-displayed' }>
@@ -52,11 +64,14 @@ const AddCategory = () => {
         </div>
     )
 
+
+
     const displaySuccess = () => (
         <div className={ success ? 'success' : 'not-displayed' }>
             Kategori har lagts till
         </div>
     )
+
 
 
     const categoryForm = () => (
@@ -78,11 +93,11 @@ const AddCategory = () => {
 
     return (
         <Layout title="Ny kategori" menuItems={menuItems}>
-            <DashboardCard title="Ny kategori">
+            <Card title="Ny kategori">
                 {displayError()}
                 {displaySuccess()}
                 {categoryForm()}   
-            </DashboardCard>
+            </Card>
             
         </Layout>
     )

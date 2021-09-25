@@ -25,6 +25,35 @@ const Home = () => {
     const search =<FontAwesomeIcon icon={faSearch}/>
     const spinner =<FontAwesomeIcon icon={faSpinner}/>
 
+
+
+    useEffect(() => {
+        document.title = 'Start';
+    }, []);
+
+
+
+    useEffect(() => {
+        fetchProductsBySort('createdAt');
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            const result = await categoryService.getCategories();
+            if (result.error) {
+                setError(result.error);
+            }
+            else {
+                setCategories(result);
+            }
+        }
+        fetchCategories();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     
 
     const fetchProductsBySort = async (sortValue = sort) => {
@@ -118,29 +147,6 @@ const Home = () => {
         }
         setProducts(result); 
     }
-
-
-
-    useEffect(() => {
-        fetchProductsBySort('createdAt');
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-
-
-    useEffect(() => {
-        const fetchCategories = async () => {
-            const result = await categoryService.getCategories();
-            if (result.error) {
-                setError(result.error);
-            }
-            else {
-                setCategories(result);
-            }
-        }
-        fetchCategories();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
 
 

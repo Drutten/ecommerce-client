@@ -5,7 +5,7 @@ import './Layout.css';
 import Hamburger from '../hamburger/Hamburger';
 
 const Layout = ({
-    title = 'Rubrik',
+    title = '',
     menuItems = [],
     categories = [],
     onFetchByCategory,

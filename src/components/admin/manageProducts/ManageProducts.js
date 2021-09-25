@@ -4,7 +4,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 import AuthService from '../../../services/authService';
 import ProductService from '../../../services/productService';
-import DashboardCard from '../../dashboardCard/DashboardCard';
+import Card from '../../card/Card';
 import ListItem from '../../listItem/ListItem';
 import Layout from '../../layout/Layout';
 import './ManageProducts.css';
@@ -21,10 +21,10 @@ const ManageProducts = () => {
     const [limit] = useState('');
 
     const [menuItems] = useState([
-        {id: 1, name: 'Ordrar', path: '/orders', icon: 'icon'},
-        {id: 2, name: 'Ny kategori', path: '/create/category', icon: 'icon'},
-        {id: 3, name: 'Ny produkt', path: '/create/product', icon: 'icon'},
-        {id: 4, name: 'Produkter', path: '/admin/products', icon: 'icon'}
+        {id: 1, name: 'Ordrar', path: '/orders'},
+        {id: 2, name: 'Ny kategori', path: '/create/category'},
+        {id: 3, name: 'Ny produkt', path: '/create/product'},
+        {id: 4, name: 'Produkter', path: '/admin/products'}
     ]);
 
     const authService = new AuthService();
@@ -32,6 +32,19 @@ const ManageProducts = () => {
     const userId = authService.getLoggedInUser().user._id;
     const token = authService.getLoggedInUser().token;
     const spinner  =<FontAwesomeIcon icon={faSpinner}/>
+
+
+
+    useEffect(() => {
+        document.title = 'Produkter';
+    }, []);
+
+
+
+    useEffect(() => {
+        fetchProducts();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
 
 
@@ -53,12 +66,7 @@ const ManageProducts = () => {
         }    
     }
 
-
-    useEffect(() => {
-        fetchProducts();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
+   
 
     const removeProduct = async (productId) => {
         if (window.confirm('Ta bort produkt')) {
@@ -75,11 +83,13 @@ const ManageProducts = () => {
     }
 
 
+
     const displayError = () => (
         <div className={ (error) ? 'error' : 'not-displayed' }>
             { error }
         </div>
     )
+
 
 
     const displayMessage = () => (
@@ -89,11 +99,13 @@ const ManageProducts = () => {
     )
 
 
+
     const displayLoading = () => (
         <div className={ (loading) ? 'spinner' : 'not-displayed' }>
             {spinner}
         </div>
     );
+
 
 
     const setItemBackground = (index) => {
@@ -104,7 +116,7 @@ const ManageProducts = () => {
 
     return (
         <Layout title="Produkter" menuItems={menuItems}>
-            <DashboardCard title="Hantera produkter">
+            <Card title="Hantera produkter">
                 {displayError()}
                 {displayMessage()}
                 {displayLoading()}
@@ -121,7 +133,7 @@ const ManageProducts = () => {
                     ) : ''}
                 </div>
 
-            </DashboardCard>
+            </Card>
         </Layout>
     )
 }

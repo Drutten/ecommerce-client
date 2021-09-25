@@ -1,25 +1,23 @@
 import { Route, Redirect } from 'react-router-dom';
 import AuthService from '../services/authService';
-import Page from '../components/Page';
 
-const AdminRoute = ({ component: Component, title = '', ...rest }) => {
+// https://reactrouter.com/web/example/auth-workflow
+
+const AdminRoute = ({ children, ...rest }) => {
 
     const authService = new AuthService();
     
     return (
         <Route
             {...rest}
-            render={(props) =>
+            render={({location}) =>
             authService.getLoggedInUser() && authService.getLoggedInUser().user.role === 1 ? (
-                <Page title={title}>
-                    <Component {...props}/>
-                </Page>
-                
+                children
             ) : (
                 <Redirect
                 to={{
                     pathname: "/signin",
-                    state: { from: props.location }
+                    state: { from: location }
                 }}
                 />
             )

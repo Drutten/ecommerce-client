@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { StateContext } from '../../StateContext';
@@ -10,6 +10,14 @@ const Cart = () => {
 
     const [cartItems] = useContext(StateContext);
 
+
+
+    useEffect(() => {
+        document.title = 'Varukorg';
+    }, []);
+
+
+
     const getTotal = () => {
         let total = 0;
         cartItems.forEach((item) => {
@@ -17,6 +25,7 @@ const Cart = () => {
         });
         return total;
     }
+
 
 
     return (
@@ -47,9 +56,7 @@ const Cart = () => {
                     <Link to="/" className="link-button">Fortsätt handla</Link>
                 </div>}
 
-            </div>
-
-            
+            </div>   
             
         </Layout>
     )

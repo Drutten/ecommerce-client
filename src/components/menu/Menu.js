@@ -26,6 +26,8 @@ const Menu = (props) => {
 
   const user = (authService.getLoggedInUser()) ? authService.getLoggedInUser().user : null;
 
+
+
   const outsideClick = e => {
     if (categoryRef?.current?.contains(e.target)) {
       // inside click
@@ -34,6 +36,8 @@ const Menu = (props) => {
     // outside click
     setCategoryListOpen(false); 
   };
+
+
 
   useEffect(() => {
       // add when mounted
@@ -44,19 +48,27 @@ const Menu = (props) => {
       };
   }, []);
 
+
+
   const setOpenClass = () => {
     return isOpenMenu ? 'open-menu' : '';
   }
+
+
 
   const handleFetchByCategory = async (item) => {
     await onFetchByCategory(item);
     setIsOpenMenu(false);
   }
 
-    const handleFetchAll = async () => {
-      await onFetchAll();
-      setIsOpenMenu(false);
-    }
+
+
+  const handleFetchAll = async () => {
+    await onFetchAll();
+    setIsOpenMenu(false);
+  }
+
+
 
   const toggleCategoryList = (e, close = false) => {
     if (close) {
@@ -67,9 +79,13 @@ const Menu = (props) => {
     }
   }
 
+
+
   const getCategoryListOpenClass = () => {
     return (categoryListOpen) ? 'isOpenCategories': '';
   }
+
+
 
   const getActiveClass = (history, path) => {
     if (history.location.pathname === path) {
@@ -80,7 +96,10 @@ const Menu = (props) => {
     }
   }
 
+
+
   const addCapitalLetter = (text) => (`${text.charAt(0).toUpperCase()}${text.slice(1)}`);
+
 
   
   return(
@@ -88,16 +107,16 @@ const Menu = (props) => {
       <li className={`${getActiveClass(history, '/')}`}><Link className="menu-item" to="/"><span>{home}</span>Start</Link></li>
       <li className={`${getActiveClass(history, '/cart')}`}><Link className="menu-item" to="/cart"><span>{bag}</span>Varukorg</Link></li>
 
-      {authService.getLoggedInUser() && (
-        <li className={getActiveClass(history, `/profile/${user._id}`)}><Link className="menu-item" to={`/profile/${user._id}`}><span>{userIcon}</span>Profil</Link></li>
-      )}
-
       {authService.getLoggedInUser() && authService.getLoggedInUser().user.role === 0 && (
-        <li className={`${getActiveClass(history, '/dashboard')}`}><Link className="menu-item" to="/dashboard"><span>{tools}</span>Kontrollpanel</Link></li>
+        <li className={`${getActiveClass(history, '/profile')}`}><Link className="menu-item" to="/profile"><span>{userIcon}</span>Profil</Link></li>
       )}
 
       {authService.getLoggedInUser() && authService.getLoggedInUser().user.role === 1 && (
-        <li className={`${getActiveClass(history, '/admin/dashboard')}`}><Link className="menu-item" to="/admin/dashboard"><span>{tools}</span>Administratör</Link></li> 
+        <li className={`${getActiveClass(history, '/admin')}`}><Link className="menu-item" to="/admin"><span>{userIcon}</span>Administratör</Link></li> 
+      )}
+
+      {authService.getLoggedInUser() && (
+        <li className={getActiveClass(history, `/edit-profile/${user._id}`)}><Link className="menu-item" to={`/edit-profile/${user._id}`}><span>{tools}</span>Redigera profil</Link></li>
       )}
 
       {(menuItems.length > 0) && menuItems.map(item => {
