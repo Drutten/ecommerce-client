@@ -19,6 +19,7 @@ import Checkout from './components/checkout/Checkout';
 import EditProfile from './components/editProfile/EditProfile';
 import Orders from './components/admin/orders/Orders';
 import EditProduct from './components/admin/editProduct/EditProduct';
+import NotFound from './components/notFound/NotFound';
 
 import './App.css';
 
@@ -74,6 +75,8 @@ const App = () => (
         <Route exact path="/products/:productId"><Product /></Route>
 
         <Route exact path="/"><Home /></Route>
+
+        <Route component={NotFound} />
 
       </Switch>
     </StateProvider>

@@ -27,20 +27,7 @@ const EditProfile = () => {
     const { userId } = useParams();
 
     const { name, password } = profile;
-
-
-
-    useEffect(() => {
-        fetchUser(userId);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-
-
-    useEffect(() => {
-        document.title = 'Redigera profil';
-    }, []);
-
+    
 
 
     const fetchUser = async (userId) => {
@@ -60,6 +47,19 @@ const EditProfile = () => {
             });
         }
     }
+
+
+
+    useEffect(() => {
+        document.title = 'Redigera profil';
+    }, []);
+
+
+
+    useEffect(() => {
+        fetchUser(userId);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
   
     
 
@@ -79,7 +79,7 @@ const EditProfile = () => {
             setError(result.error);
         }
         else {
-            console.log(result);
+            // console.log(result);
             setLoading(false);
             authService.updateLoggedInUser(result, () => {
                 setProfile({

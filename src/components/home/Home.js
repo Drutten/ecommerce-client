@@ -27,6 +27,26 @@ const Home = () => {
 
 
 
+    const fetchProductsBySort = async (sortValue = sort) => {
+        let result;
+        prepareFetch();
+        if (currentCategory) {
+            result = await productService.getProductsByCategory(sortValue, currentCategory);    
+        }
+        else{
+            result = await productService.getProducts(sortValue);
+        }
+        if (result.error) {
+            endFetchWithError(result.error);
+        }
+        else {
+            endFetchWithSuccess(result);
+            setSort(sortValue);   
+        }  
+    }
+
+
+
     useEffect(() => {
         document.title = 'Start';
     }, []);
@@ -52,27 +72,7 @@ const Home = () => {
         }
         fetchCategories();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    
-
-    const fetchProductsBySort = async (sortValue = sort) => {
-        let result;
-        prepareFetch();
-        if (currentCategory) {
-            result = await productService.getProductsByCategory(sortValue, currentCategory);    
-        }
-        else{
-            result = await productService.getProducts(sortValue);
-        }
-        if (result.error) {
-            endFetchWithError(result.error);
-        }
-        else {
-            endFetchWithSuccess(result);
-            setSort(sortValue);   
-        }  
-    }
+    }, []);  
 
 
 

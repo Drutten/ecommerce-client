@@ -34,6 +34,20 @@ const Checkout = () => {
 
 
 
+    const fetchBraintreeToken = async (userId, token) => {
+        setError('');
+        const result = await braintreeService.getBraintreeToken(userId, token);
+    
+        if (result.error) {
+            setError(result.error);
+        }
+        else {
+            setBraintreeToken(result);
+        }
+    }
+
+
+
     useEffect(() => {
         document.title = 'Kassan';
     }, []);
@@ -46,20 +60,6 @@ const Checkout = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-
-
-    const fetchBraintreeToken = async (userId, token) => {
-        setError('');
-        const result = await braintreeService.getBraintreeToken(userId, token);
-    
-        if (result.error) {
-            setError(result.error);
-        }
-        else {
-            setBraintreeToken(result);
-        }
-    }
 
 
 

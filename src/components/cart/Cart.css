@@ -21,7 +21,7 @@
     margin-top: 20px;
 }
 
-.link-button {
+.total .link-button, .empty-cart .link-button {
     width: 90%;
     background-color: rgb(9, 97, 179);
     color: rgb(255, 255, 255);
@@ -64,7 +64,7 @@
 
 @media screen and (min-width: 1000px) {
     .cart-wrapper {
-        margin: 0;
+        margin: 30px 80px;
     }
     .empty-cart-container {
         margin-left: 80px;

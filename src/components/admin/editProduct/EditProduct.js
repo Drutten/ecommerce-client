@@ -68,33 +68,30 @@ const EditProduct = () => {
 
 
     useEffect(() => {
+        const init = async (productId) => {
+            setCurrentStatus({...currentStatus, error: '', loading: true});
+            const result = await productService.getProduct(productId);
+            if (result.error) {
+                setCurrentStatus({...currentStatus, error: result.error, loading: false});
+            }
+            else {
+                setCurrentStatus({...currentStatus, loading: false});
+                setFormValues({
+                    ...formValues,
+                    name: result.name,
+                    description: result.description,
+                    price: result.price,
+                    category: result.category._id,
+                    shipping: result.shipping,
+                    quantity: result.quantity
+                })
+                setFormData(new FormData());
+                fetchCategories();
+            }
+        }
         init(productId);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-
-
-    const init = async (productId) => {
-        setCurrentStatus({...currentStatus, error: '', loading: true});
-        const result = await productService.getProduct(productId);
-        if (result.error) {
-            setCurrentStatus({...currentStatus, error: result.error, loading: false});
-        }
-        else {
-            setCurrentStatus({...currentStatus, loading: false});
-            setFormValues({
-                ...formValues,
-                name: result.name,
-                description: result.description,
-                price: result.price,
-                category: result.category._id,
-                shipping: result.shipping,
-                quantity: result.quantity
-            })
-            setFormData(new FormData());
-            fetchCategories();
-        }
-    }
 
 
 

@@ -37,20 +37,6 @@ const Orders = () => {
 
 
 
-    useEffect(() => {
-        fetchOrders(userId, token);
-        fetchStatusOptions(userId, token);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-
-
-    useEffect(() => {
-        document.title = 'Ordrar';
-    }, []);
-
-
-
     const fetchOrders = async (userId, token) => {
         setError('');
         setMessage('');
@@ -82,6 +68,20 @@ const Orders = () => {
             setStatusOptions(result);
         }
     }
+
+
+
+    useEffect(() => {
+        document.title = 'Ordrar';
+    }, []);
+
+
+
+    useEffect(() => {
+        fetchOrders(userId, token);
+        fetchStatusOptions(userId, token);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
 
 

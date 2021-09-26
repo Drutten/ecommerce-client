@@ -35,19 +35,6 @@ const ManageProducts = () => {
 
 
 
-    useEffect(() => {
-        document.title = 'Produkter';
-    }, []);
-
-
-
-    useEffect(() => {
-        fetchProducts();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-
-
     const fetchProducts = async () => {
         setError('');
         setMessage('');
@@ -65,6 +52,19 @@ const ManageProducts = () => {
             setProducts(result);
         }    
     }
+
+
+
+    useEffect(() => {
+        document.title = 'Produkter';
+    }, []);
+
+
+
+    useEffect(() => {
+        fetchProducts();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
    
 
