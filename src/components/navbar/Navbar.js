@@ -13,7 +13,7 @@ const bag = <FontAwesomeIcon icon={faShoppingBag}/>;
 const heart = <FontAwesomeIcon icon={faHeart}/>;
 
 
-const Navbar = (props) => {
+const Navbar = () => {
 
     const [cartItems] = useContext(StateContext);
 
@@ -31,6 +31,8 @@ const Navbar = (props) => {
         setIsOpen(!isOpen);
     }
 
+
+
     const handleClickOutside = e => {
         if (dropdownRef?.current?.contains(e.target)) {
           // inside click
@@ -40,14 +42,16 @@ const Navbar = (props) => {
         setIsOpen(false); 
     };
 
+
+
     useEffect(() => {
-        // add when mounted
         document.addEventListener("mousedown", handleClickOutside);
         // return function to be called when unmounted
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
+
 
 
     const getCartItemsAmount = () => {
@@ -57,6 +61,16 @@ const Navbar = (props) => {
         });
         return totalAmount;
     }
+
+
+
+    const onClickSignout = () => {
+        authService.signout(() => {
+            history.push('/');
+            setIsOpen(false);
+        })    
+    }
+
 
 
     return (
@@ -83,10 +97,7 @@ const Navbar = (props) => {
                                 </Fragment>
                             )}
                             {authService.isAuthenticated() && (
-                                <li className="dropdown-item" onClick={ () => authService.signout(() => {
-                                    history.push('/');
-                                    setIsOpen(false);
-                                })}>
+                                <li className="dropdown-item" onClick={onClickSignout}>
                                     <span className="dropdown-link">Logga ut</span>
                                 </li>    
                             )}  

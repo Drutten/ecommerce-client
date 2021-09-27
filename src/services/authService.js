@@ -24,16 +24,10 @@ export default class AuthService {
         return await response.json();
     }
 
-    signout = async (next) => {
+    signout = (next) => {
         if (typeof window !== 'undefined') {
             localStorage.removeItem('jwt');
             next();
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/signout`, {
-                method: 'GET'
-            });
-            const data = await response.json();
-            console.log(data);
-            return data;       
         }  
     }
 

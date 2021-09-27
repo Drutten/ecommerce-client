@@ -107,16 +107,16 @@ const Menu = (props) => {
       <li className={`${getActiveClass(history, '/')}`}><Link className="menu-item" to="/"><span>{home}</span>Start</Link></li>
       <li className={`${getActiveClass(history, '/cart')}`}><Link className="menu-item" to="/cart"><span>{bag}</span>Varukorg</Link></li>
 
+      {authService.getLoggedInUser() && (
+        <li className={getActiveClass(history, `/edit-profile/${user._id}`)}><Link className="menu-item" to={`/edit-profile/${user._id}`}><span>{tools}</span>Redigera profil</Link></li>
+      )}
+
       {authService.getLoggedInUser() && authService.getLoggedInUser().user.role === 0 && (
         <li className={`${getActiveClass(history, '/profile')}`}><Link className="menu-item" to="/profile"><span>{userIcon}</span>Profil</Link></li>
       )}
 
       {authService.getLoggedInUser() && authService.getLoggedInUser().user.role === 1 && (
         <li className={`${getActiveClass(history, '/admin')}`}><Link className="menu-item" to="/admin"><span>{userIcon}</span>Administratör</Link></li> 
-      )}
-
-      {authService.getLoggedInUser() && (
-        <li className={getActiveClass(history, `/edit-profile/${user._id}`)}><Link className="menu-item" to={`/edit-profile/${user._id}`}><span>{tools}</span>Redigera profil</Link></li>
       )}
 
       {(menuItems.length > 0) && menuItems.map(item => {
